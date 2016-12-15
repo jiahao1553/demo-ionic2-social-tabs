@@ -12,12 +12,10 @@
         <ion-avatar item-left>
           <img [src]="p.Avatar">
         </ion-avatar>
-        <h2 (click)="openByProfile(p)">{{p.PostBy}}</h2>
-        <ion-badge item-right (click)="openByArea(p)">{{p.Area}}</ion-badge>
+        <h2 >{{p.PostBy}}</h2>
+        <ion-badge item-right>{{p.Area}}</ion-badge>
         <p>{{p.PostOn}}</p>
       </ion-item>
-
-      <!-- <img class="image-in-card" [src]="p.Image" (click)="goToDetailPage(p)"> -->
 
       <ion-card-content (click)="goToDetailPage(p)">
         <h2>{{p.Topic}}</h2>
@@ -38,7 +36,7 @@
           </button>
         </ion-col>
         <ion-col width-33 center text-center>
-          <button ion-button full primary clear small icon-left text-center (click)="openByProgress(p)">
+          <button ion-button full primary clear small icon-left text-center>
           <ion-icon name="bookmark"></ion-icon>{{p.Progress}}
         </button>
         </ion-col>

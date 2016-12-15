@@ -20,12 +20,11 @@ import { TabsPage } from '../tabs/tabs';
 export class PostPage {
   Areas: any = [];
   Area: string;
-  Base64Image: string;
+  imageUri: string;
   Description: string;
   Suggestion: string;
-  // idea: Idea;
   username: string;
-  // user: User;
+  mediaId: string;
 
   constructor(
     public navCtrl: NavController,
@@ -38,6 +37,7 @@ export class PostPage {
       this.Areas = this.shared.AreaSet;
       this.Area = "Choose a Category";
       this.username = shared.username;
+      this.mediaId = "na";
     }
 
   ionViewDidLoad() {
@@ -47,24 +47,29 @@ export class PostPage {
 
   accessGallery(){
    Camera.getPicture({
+     mediaType: Camera.MediaType.ALLMEDIA,
      sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
-     destinationType: Camera.DestinationType.DATA_URL
+     destinationType: Camera.DestinationType.FILE_URI
     }).then((imageData) => {
-      this.Base64Image = 'data:image/jpeg;base64,'+imageData;
+      this.imageUri = /*'data:image/jpeg;base64,'+*/imageData;
      }, (err) => {
       console.log(err);
     });
   }
 
   takePhoto(){
-    Camera.getPicture().then((imageData) => {
-       this.Base64Image = imageData
+    Camera.getPicture({
+      mediaType: Camera.MediaType.ALLMEDIA,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      destinationType: Camera.DestinationType.FILE_URI
+    }).then((imageData) => {
+       this.imageUri = imageData
     }, (err) => {
        console.log(err);
     });
   }
 
-  updateIdea(){
+  post(){
     console.log('Post '+this.username+' '+this.Area+' '+this.Description+' '+this.Suggestion);
     // let data = {
     //   description: this.Description,
@@ -73,28 +78,40 @@ export class PostPage {
     //   userId: this.shared.user._id
     // };
     let loading = this.loadingCtrl.create({
-      content: "Sending idea..."
+      content: "Your idea is going live :)"
     });
     loading.present();
 
-    this.restService.postIdea(this.Description, this.Suggestion, this.Area, this.username, this.Base64Image).subscribe(data => {
-      console.log(data);
-      // this.idea = data;
-      loading.dismiss();
-      this.navCtrl.setRoot(TabsPage);
-    }, (err) => {
-      loading.dismiss();
-      let alert = this.alertCtrl.create({
-        title: 'Sending idea failed',
-        message: err,
-        buttons: ['Try again']
-      });
-      alert.present();
-      // console.log(err);
-    });
+    if (this.imageUri){
+      this.mediaId = this.restService.postMedia(this.imageUri);
+    }
 
-    // if (this.Base64Image){
-    //   this.restService.postMedia(this.idea.id, this.Base64Image).subscribe(data => {
+    if (this.mediaId=="error"){
+      loading.dismiss();
+    }
+    else{
+      this.restService.postIdea(this.Description, this.Suggestion, this.Area, this.username, this.mediaId)
+      .subscribe(data =>
+      {
+            console.log(data);
+            // this.idea = data;
+            loading.dismiss();
+            this.navCtrl.parent.switch(0);
+            this.navCtrl.setRoot(TabsPage);
+      }, (err) =>
+      {
+        loading.dismiss();
+        let alert = this.alertCtrl.create({
+          title: 'Sending idea failed',
+          message: err,
+          buttons: ['Try again']
+        });
+        alert.present();
+      });
+    }
+
+    // if (this.imageURI){
+    //   this.restService.postMedia(this.idea.id, this.imageURI).subscribe(data => {
     //     loading.dismiss();
     //     console.log(data);
     //     this.navCtrl.setRoot(TabsPage);

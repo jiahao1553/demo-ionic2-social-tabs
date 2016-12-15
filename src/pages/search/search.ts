@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
+import { Shared } from '../../providers/shared';
 
 /*
   Generated class for the Search page.
@@ -13,7 +14,19 @@ import { NavController } from 'ionic-angular';
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController) {}
+  Progress: string = "open";
+  Areas: any = [];
+  Area: string = "Area 0";
+  StartDateUnix: number = 86400;
+  SearchbyTopic: boolean = true;
+  SearchbyUser: boolean = false;
+  constructor(
+    public navCtrl: NavController,
+    public viewCtrl: ViewController,
+    public shared: Shared) {
+    // this.Area = this.shared.Area;
+    this.Areas = this.shared.AreaSet;
+  }
 
   ionViewDidLoad() {
     console.log('Hello SearchPage Page');

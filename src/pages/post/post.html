@@ -14,7 +14,7 @@
 
 
 <ion-content>
-  <img [src]="Base64Image" *ngIf="Base64Image" />
+  <img [src]="imageUri" *ngIf="imageUri" />
   <ion-textarea rows="6" placeholder="What's on your mind?" padding [(ngModel)]="Description"></ion-textarea>
   <ion-row>
     <ion-col width-80 text-center>
@@ -36,6 +36,6 @@
   </ion-row>
   <ion-textarea rows="6" placeholder="Suggestion" padding [(ngModel)]="Suggestion"></ion-textarea>
   <ion-fab right bottom>
-    <button ion-fab (click)="updateIdea()"><ion-icon name="send"></ion-icon></button>
+    <button ion-fab (click)="post()"><ion-icon name="send"></ion-icon></button>
   </ion-fab>
 </ion-content>
