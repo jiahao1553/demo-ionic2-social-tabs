@@ -66,17 +66,25 @@ postMedia(imageUri): string{
       fileId= data.response;
     }, (err) => {
       // error
-      let alert = this.alertCtrl.create({
-        title: 'Failed to upload',
-        subTitle: err.code,
-        buttons: ['Dismiss']
-      });
-      alert.present();
+      // let alert = this.alertCtrl.create({
+      //   title: 'Failed to upload',
+      //   subTitle: err.code,
+      //   buttons: ['Dismiss']
+      // });
+      // alert.present();
       console.log("Failed to upload file");
       console.log("Code = " + err.code);
       fileId= "\"error\""; //let's make 0 equals to upload failed
     })
     return fileId.replace('\"', '');
+}
+
+uploadFile(fileToUpload: any) {
+    let input = new FormData();
+    input.append("avatar", fileToUpload);
+
+    return this.http
+        .post(this.gridfsUrl+"/file/", input);
 }
 
 }

@@ -14,10 +14,20 @@
 
 
 <ion-content>
+  <!-- <form action="https://protected-temple-59341.herokuapp.com/file/" method="POST" enctype="multipart/form-data">
+    <input type="file" name="avatar">
+    <input type="submit" value="submit">
+  </form> -->
+  <div>
+    <input type="file" #fileInput (change)="addFile()"/>
+</div>
+<!-- <div *ngFor="let file_src of file_srcs">
+    <img [attr.src]='file_src' alt=""/>
+</div> -->
   <img [src]="imageUri" *ngIf="imageUri" />
   <ion-textarea rows="6" placeholder="What's on your mind?" padding [(ngModel)]="Description"></ion-textarea>
   <ion-row>
-    <ion-col width-80 text-center>
+    <ion-col width-50 text-center>
       <ion-item>
           <ion-label>Area</ion-label>
           <ion-select [(ngModel)]="Area">
@@ -25,13 +35,13 @@
       </ion-select>
       </ion-item>
     </ion-col>
-    <ion-col width-10>
-      <button ion-button block clear large>
-        <ion-icon name="images" (click)="accessGallery()"></ion-icon></button>
+    <ion-col width-20>
+      <button ion-button clear large (click)="accessGallery()">
+        <ion-icon name="images" ></ion-icon></button>
     </ion-col>
-    <ion-col width-10>
-      <button ion-button block clear large>
-        <ion-icon name="camera" (click)="takePhoto()"></ion-icon></button>
+    <ion-col width-20>
+      <button ion-button clear large (click)="takePhoto()">
+        <ion-icon name="camera" ></ion-icon></button>
     </ion-col>
   </ion-row>
   <ion-textarea rows="6" placeholder="Suggestion" padding [(ngModel)]="Suggestion"></ion-textarea>
