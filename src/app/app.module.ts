@@ -29,7 +29,21 @@ import { ReviewModalPage } from '../pages/review-modal/review-modal';
     ReviewModalPage,
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+tabsPlacement: 'top',
+  platforms: {
+    android: {
+      tabsPlacement: 'bottom'
+    },
+    ios: {
+      tabsPlacement: 'top'
+    },
+    windows:
+    {
+      tabsPlacement: 'top'
+    }
+  }
+})
   ],
   bootstrap: [IonicApp],
   entryComponents: [
