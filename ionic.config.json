@@ -2,11 +2,5 @@
   "name": "community",
   "app_id": "e9804dc6",
   "v2": true,
-  "typescript": true,
-  "proxies": [
-    {
-      "path": "/user/create",
-      "proxyUrl": "https://floating-anchorage-35981.herokuapp.com/user/create"
-    }
-  ]
+  "typescript": true
 }

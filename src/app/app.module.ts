@@ -36,7 +36,7 @@ tabsPlacement: 'top',
       tabsPlacement: 'bottom'
     },
     ios: {
-      tabsPlacement: 'top'
+      tabsPlacement: 'bottom'
     },
     windows:
     {

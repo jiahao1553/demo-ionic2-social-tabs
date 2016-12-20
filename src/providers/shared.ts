@@ -2,19 +2,14 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Post } from '../models/post';
+import { ToastController } from 'ionic-angular';
 
-/*
-  Generated class for the Shared provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class Shared {
   AreaSet: any = [];
   username: any;
   Post:Post[];
-  constructor(public http: Http) {
+  constructor(private http: Http, private toastCtrl: ToastController) {
     console.log('Hello Shared Provider');
     this.AreaSet = [
       {id: 'pl', value: 'Production-LCMS'},
@@ -99,5 +94,13 @@ export class Shared {
         Area: 'AAS', Likes: 9, Comments: 2, Progress: 'Progress'
       },
     ]
+  }
+
+  toast(message: string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
   }
 }

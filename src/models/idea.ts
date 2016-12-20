@@ -5,5 +5,5 @@ export interface Idea {
   area: string;
   username: string;
   updatedAt: string;
-  base64image: string;
+  media: string;
 }
