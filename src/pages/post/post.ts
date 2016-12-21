@@ -10,14 +10,22 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class PostPage {
   @ViewChild("fileInput") fileInput;
-  Areas: any = [];
-  Area: string;
-  // imageUri: string;
-  Description: string;
-  Suggestion: string;
-  username: string;
+  ideaOwner:string;
+  ideaOwnerNickname: string;
+  ideaOwnerAvatar: string;
+  description: string;
   mediaId: string;
+  mediaType: string;
+  area: string;
+  status: string;
+  likesNo: number;
+  suggestionsNo: number;
+  latestSuggestionOwner: string;
+  latestSuggestionOwnerNickname: string;
+  latestSuggestion: string;
+  areas: any = [];
   fi: any;
+  filename: string;
   fileExist: boolean;
 
   constructor(
@@ -28,12 +36,21 @@ export class PostPage {
     public shared: Shared,
     public restService: RestService,
     public navParams: NavParams) {
-    this.Areas = this.shared.AreaSet;
-    this.Area = "";
-    this.Description = "";
-    this.Suggestion = "";
-    this.username = shared.username;
+    this.ideaOwner = shared.username;
+    this.ideaOwnerNickname = shared.nickname;
+    this.ideaOwnerAvatar = shared.avatarId;
+    this.description = "";
     this.mediaId = "";
+    this.mediaType = "";
+    this.area = "";
+    this.status = "Open";
+    this.likesNo = 0;
+    this.suggestionsNo = 1;
+    this.latestSuggestionOwner = shared.username;
+    this.latestSuggestionOwnerNickname = shared.nickname;
+    this.latestSuggestion = "";
+    this.areas = this.shared.AreaSet;
+    this.filename ="";
     this.fileExist = false;
   }
 
@@ -43,13 +60,15 @@ export class PostPage {
 
   addFile(): void {
     this.fi = this.fileInput.nativeElement;
+    this.filename = this.fi.files[0].name;
+    this.mediaType = this.filename.substr(this.filename.lastIndexOf(".")).toLowerCase();
     this.fileExist= (this.fi.files && this.fi.files[0]);
   }
 
   post() {
-    if((this.Description.trim().length>0)
-    &&(this.Suggestion.trim().length>0)
-    &&(this.Area.trim().length>0)){
+    if((this.description.trim().length>0)
+    &&(this.latestSuggestion.trim().length>0)
+    &&(this.area.trim().length>0)){
       let loading = this.loadingCtrl.create({
         content: "Your idea is going live :)"
       });
@@ -61,7 +80,11 @@ export class PostPage {
           .uploadFile(fileToUpload)
           .subscribe(res => {
             this.mediaId=res.json();
-            this.restService.postIdea(this.Description, this.Suggestion, this.Area, this.username, res.json())
+            this.restService.postIdea(
+              this.ideaOwner, this.ideaOwnerNickname, this.ideaOwnerAvatar,
+              this.description, res.json(), this.mediaType,
+              this.area, this.status, this.likesNo, this.suggestionsNo,
+              this.latestSuggestionOwner, this.latestSuggestionOwnerNickname, this.latestSuggestion)
               .subscribe(data => {
                 console.log(data);
                 this.shared.toast('Idea uploaded');
@@ -87,7 +110,11 @@ export class PostPage {
           });
       }
       else{
-        this.restService.postIdea(this.Description, this.Suggestion, this.Area, this.username, this.mediaId)
+        this.restService.postIdea(
+          this.ideaOwner, this.ideaOwnerNickname, this.ideaOwnerAvatar,
+          this.description, this.mediaId, this.mediaType,
+          this.area, this.status, this.likesNo, this.suggestionsNo,
+          this.latestSuggestionOwner, this.latestSuggestionOwnerNickname, this.latestSuggestion)
           .subscribe(data => {
             this.shared.toast('Idea sent!');
             loading.dismiss();

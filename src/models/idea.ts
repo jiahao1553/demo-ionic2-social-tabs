@@ -1,9 +1,17 @@
 export interface Idea {
   id: string;
+  ideaOwner:string;
+  ideaOwnerNickname: string;
+  ideaOwnerAvatar: string;
   description: string;
-  suggestion: string;
+  mediaId: string;
+  mediaType: string;
   area: string;
-  username: string;
   updatedAt: string;
-  media: string;
+  status: string;
+  likesNo: number;
+  suggestionsNo: number;
+  latestSuggestionOwner: string;
+  latestSuggestionOwnerNickname: string;
+  latestSuggestion: string;
 }

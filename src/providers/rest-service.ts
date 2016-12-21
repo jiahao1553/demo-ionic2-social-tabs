@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
-import { Transfer } from 'ionic-native';
 import { User } from '../models/user';
 import { Idea } from '../models/idea';
 import { AlertController } from 'ionic-angular';
@@ -29,15 +28,42 @@ export class RestService {
       .map(res => <User>res.json());
   }
 
-  postIdea(description: string, suggestion: string, area: string, username: string, mediaId: string): Observable<Idea> {
+  postIdea(ideaOwner:string,
+  ideaOwnerNickname: string,
+  ideaOwnerAvatar: string,
+  description: string,
+  mediaId: string,
+  mediaType: string,
+  area: string,
+  status: string,
+  likesNo: number,
+  suggestionsNo: number,
+  latestSuggestionOwner: string,
+  latestSuggestionOwnerNickname: string,
+  latestSuggestion: string): Observable<Idea> {
+    let data = {
+      ideaOwner : ideaOwner,
+      ideaOwnerNickname : ideaOwnerNickname,
+      ideaOwnerAvatar : ideaOwnerAvatar,
+      description : description,
+      mediaId : mediaId,
+      mediaType : mediaType,
+      area : area,
+      status : status,
+      likesNo : likesNo,
+      suggestionsNo : suggestionsNo,
+      latestSuggestionOwner : latestSuggestionOwner,
+      latestSuggestionOwnerNickname : latestSuggestionOwnerNickname,
+      latestSuggestion : latestSuggestion,
+    };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(`${this.apiUrl}/idea/create?description=${description}&suggestion=${suggestion}&area=${area}&username=${username}&mediaId=${mediaId}`, { headers: headers })
+    return this.http.post(this.apiUrl+'/idea/', JSON.stringify(data), { headers: headers })
       .map(res => <Idea>res.json());
   }
 
-  getIdea(): Observable<Idea[]> {
-    return this.http.get(`${this.apiUrl}/idea?sort=createdAt DESC&limit=10`)
+  getIdea(loadIdeasSkipper: number): Observable<Idea[]> {
+    return this.http.get(`${this.apiUrl}/idea?sort=createdAt DESC&limit=5&skip=${loadIdeasSkipper}`)
       .map(res => <Idea[]>res.json());
   }
 

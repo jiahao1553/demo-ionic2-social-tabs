@@ -1,5 +1,5 @@
-import { Component, ViewChild} from '@angular/core';
-import { NavController, LoadingController, AlertController, ViewController, Content } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { RestService } from '../../providers/rest-service';
 import { Shared } from '../../providers/shared';

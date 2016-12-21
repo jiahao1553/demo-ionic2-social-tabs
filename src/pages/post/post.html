@@ -12,15 +12,15 @@
 
 
 <ion-content padding>
-  <ion-textarea rows="10" placeholder="What's on your mind?" [(ngModel)]="Description"></ion-textarea>
+  <ion-textarea rows="10" placeholder="What's on your mind?" [(ngModel)]="description"></ion-textarea>
       <ion-item>
           <ion-label>Area</ion-label>
-          <ion-select [(ngModel)]="Area">
-        <ion-option *ngFor="let a of Areas" [value]="a.value">{{a.value}}</ion-option>
+          <ion-select [(ngModel)]="area">
+        <ion-option *ngFor="let a of areas" [value]="a.value">{{a.value}}</ion-option>
       </ion-select>
       </ion-item>
 
-  <ion-textarea rows="10" placeholder="What do you suggest?" [(ngModel)]="Suggestion"></ion-textarea>
+  <ion-textarea rows="10" placeholder="What do you suggest?" [(ngModel)]="latestSuggestion"></ion-textarea>
 </ion-content>
 
 <ion-footer padding>

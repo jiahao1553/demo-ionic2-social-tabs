@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { RestService } from '../../providers/rest-service';
-import { Shared } from '../../providers/shared';
-import { Post } from '../../models/post';
 import { Idea } from '../../models/idea';
-import { User } from '../../models/user';
 import { CommentModalPage } from '../comment-modal/comment-modal';
 import { DetailPage } from '../detail/detail';
 
@@ -13,29 +10,44 @@ import { DetailPage } from '../detail/detail';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  posts: Post[];
   ideas: Idea[];
+  moreIdeas: Idea[];
+  loadIdeasSkipper: number;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public restService: RestService,
-  public Params:Shared) {
+    public restService: RestService) {
+      this.loadIdeasSkipper = 0;
       let loading = this.loadingCtrl.create({
         content: "Getting ideas we collected..."
       });
       loading.present();
 
-      this.restService.getIdea().subscribe(data => {
-        console.log(data);
+      this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
+        this.ideas = data;
         loading.dismiss();
       }, (err) => {
         loading.dismiss();
         console.log('Error');
       });
-      this.posts = Params.Post;
   }
-  goToDetailPage(post: Post) {
-    this.navCtrl.push(DetailPage, { post });
+
+  doInfinite(infiniteScroll) {
+    this.loadIdeasSkipper+=5;
+    console.log(this.loadIdeasSkipper);
+    setTimeout(() => {
+      this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
+        this.moreIdeas = data;
+        this.ideas = this.ideas.concat(this.moreIdeas);
+      }, (err) => {
+        console.log('Error');
+      });
+      infiniteScroll.complete();
+    }, 3000);
+  }
+
+  goToDetailPage(idea: Idea) {
+    this.navCtrl.push(DetailPage, { idea });
   }
 
   openComment() {

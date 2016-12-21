@@ -6,42 +6,56 @@
 
 <ion-content>
   <ion-row responsive-sm wrap>
-      <ion-col *ngFor="let p of posts">
-    <ion-card>
-      <ion-item>
-        <ion-avatar item-left>
-          <img [src]="p.Avatar">
-        </ion-avatar>
-        <h2 >{{p.PostBy}}</h2>
-        <ion-badge item-right>{{p.Area}}</ion-badge>
-        <p>{{p.PostOn}}</p>
-      </ion-item>
+    <ion-col *ngFor="let i of ideas">
+      <ion-card>
+        <ion-item>
+          <ion-avatar item-left>
+            <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.ideaOwnerAvatar+'.jpg'">
+          </ion-avatar>
+          <h2>{{i.ideaOwnerNickname}}</h2>
+          <ion-badge item-right>{{i.area}}</ion-badge>
+          <p>{{i.updatedAt}}</p>
+        </ion-item>
 
-      <ion-card-content (click)="goToDetailPage(p)">
-        <h2>{{p.Topic}}</h2>
-        <p>{{p.Description}}</p>
-      </ion-card-content>
+        <ion-card-content>
+          <p (click)="goToDetailPage(p)">{{i.description}}</p>
+          <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'"
+          [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+'i.mediaType'">
+          <video *ngIf="i.mediaType=='.mp4'" width="320" height="240" controls>
+            <source [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+'i.mediaType'" type="video/mp4">
+          </video>
+          <a ion-item text-center *ngIf="!(i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'||i.mediaType=='.mp4'||!i.mediaType)"
+          [href]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+i.mediaType" target="_blank">
+            <ion-icon name="cloud-download"></ion-icon>{{i.mediaType}}</a>
+        </ion-card-content>
 
-      <ion-row>
-        <ion-col width-33 center text-center>
-          <button ion-button full primary clear small icon-left text-center>
+        <ion-row>
+          <ion-col width-33 center text-center>
+            <button ion-button clear full primary small icon-left text-center>
             <ion-icon name="thumbs-up"></ion-icon>
-            {{p.Likes}}
+            {{i.likesNo}}
           </button>
-        </ion-col>
-        <ion-col width-33 center text-center>
-          <button ion-button full primary clear small icon-left text-center (click)="openComment()">
+          </ion-col>
+          <ion-col width-33 center text-center>
+            <button ion-button full primary clear small icon-left text-center (click)="openComment()">
             <ion-icon name="text"></ion-icon>
-            {{p.Comments}}
+            {{i.suggestionsNo}}
           </button>
-        </ion-col>
-        <ion-col width-33 center text-center>
-          <button ion-button full primary clear small icon-left text-center>
-          <ion-icon name="bookmark"></ion-icon>{{p.Progress}}
+          </ion-col>
+          <ion-col width-33 center text-center>
+            <button ion-button full primary clear small icon-left text-center>
+          <ion-icon name="bookmark"></ion-icon>{{i.status}}
         </button>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-  </ion-col>
-</ion-row>
+          </ion-col>
+        </ion-row>
+        <p padding><i>{{i.latestSuggestionOwnerNickname}} suggested: {{i.latestSuggestion}}</i></p>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

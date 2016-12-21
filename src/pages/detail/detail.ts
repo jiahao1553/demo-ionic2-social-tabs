@@ -4,7 +4,7 @@ import { NavController, ActionSheetController, ViewController, NavParams} from '
 
 import { CommentModalPage } from '../comment-modal/comment-modal';
 import { CalculateModalPage } from '../calculate-modal/calculate-modal';
-import { Post } from '../../models/post';
+import { Idea } from '../../models/idea';
 import { Shared } from '../../providers/shared';
 /*
   Generated class for the Detail page.
@@ -22,15 +22,15 @@ export class DetailPage {
   CompletionDate: string="2016-11-19";
   YourActionVisibility: boolean=false;
   CalculateVisibility: boolean=false;
-  post: Post;
+  idea: Idea;
 
   constructor(
     public navCtrl: NavController,
     public actionSheetCtrl: ActionSheetController,
     public viewCtrl: ViewController,
     private navParams: NavParams,
-    public Params: Shared) {
-      this.post = navParams.get('post');
+    public shared: Shared) {
+      this.idea = navParams.get('idea');
     }
 
   ionViewDidLoad() {
@@ -47,7 +47,7 @@ let actionSheet = this.actionSheetCtrl.create({
       //role: 'destructive',
       handler: () => {
         console.log('Open clicked');
-        this.post.Progress = "Open";
+        this.idea.status = "Open";
         this.YourActionVisibility = false;
         this.CalculateVisibility = false;
         this.content.resize();
@@ -57,7 +57,7 @@ let actionSheet = this.actionSheetCtrl.create({
       text: 'Process',
       handler: () => {
         console.log('Process clicked');
-        this.post.Progress = "Process";
+        this.idea.status = "Process";
         this.YourActionVisibility = true;
         this.CalculateVisibility = false;
         this.content.resize();
@@ -68,7 +68,7 @@ let actionSheet = this.actionSheetCtrl.create({
       role: 'destructive',
       handler: () => {
         console.log('Process clicked');
-        this.post.Progress = "Closed";
+        this.idea.status = "Closed";
         this.YourActionVisibility = false;
         this.CalculateVisibility = true;
         this.content.resize();

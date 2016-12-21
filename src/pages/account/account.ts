@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Post } from '../../models/post';
+import { Idea } from '../../models/idea';
 // import { Shared } from '../../providers/shared';
 
 /*
@@ -14,7 +14,7 @@ import { Post } from '../../models/post';
   templateUrl: 'account.html'
 })
 export class AccountPage {
-post: Post;
+idea: Idea;
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
