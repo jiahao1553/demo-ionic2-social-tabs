@@ -10,9 +10,10 @@ import {LoginPage} from '../pages/login/login';
 import {Shared} from '../providers/shared';
 import { RestService } from '../providers/rest-service';
 import { CommentModalPage } from '../pages/comment-modal/comment-modal';
-import { DetailPage } from '../pages/detail/detail';
 import { CalculateModalPage } from '../pages/calculate-modal/calculate-modal';
 import { ReviewModalPage } from '../pages/review-modal/review-modal';
+import { SuggestionPage } from '../pages/suggestion/suggestion';
+import { ActionPage } from '../pages/action/action';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,10 @@ import { ReviewModalPage } from '../pages/review-modal/review-modal';
     TabsPage,
     LoginPage,
     CommentModalPage,
-    DetailPage,
     CalculateModalPage,
     ReviewModalPage,
+    SuggestionPage,
+    ActionPage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -55,9 +57,10 @@ tabsPlacement: 'top',
     TabsPage,
     LoginPage,
     CommentModalPage,
-    DetailPage,
     CalculateModalPage,
     ReviewModalPage,
+    SuggestionPage,
+    ActionPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Shared, RestService]
 })

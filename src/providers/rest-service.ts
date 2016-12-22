@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
 import { User } from '../models/user';
 import { Idea } from '../models/idea';
+import { Suggestion } from '../models/suggestion';
+import { Action } from '../models/action';
 import { AlertController } from 'ionic-angular';
 
 @Injectable()
@@ -25,6 +27,22 @@ export class RestService {
 
   getUser(name, password): Observable<User> {
     return this.http.get(`${this.apiUrl}/user?username=${name}&password=${password}`)//working
+      .map(res => <User>res.json());
+  }
+
+  searchUser(key: string, value: string): Observable<User> {
+    return this.http.get(`${this.apiUrl}/user?${key}=${value}`)
+      .map(res => <User>res.json());
+  }
+
+  updateUser(id: string, nickname: string, avatarId: string): Observable<User> {
+    let data = {
+      nickname: nickname,
+      avatarId: avatarId,
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(this.apiUrl+'/user/'+id, JSON.stringify(data), { headers: headers })
       .map(res => <User>res.json());
   }
 
@@ -63,8 +81,44 @@ export class RestService {
   }
 
   getIdea(loadIdeasSkipper: number): Observable<Idea[]> {
-    return this.http.get(`${this.apiUrl}/idea?sort=createdAt DESC&limit=5&skip=${loadIdeasSkipper}`)
+    return this.http.get(`${this.apiUrl}/idea?sort=updatedAt DESC&limit=5&skip=${loadIdeasSkipper}`)
       .map(res => <Idea[]>res.json());
+  }
+
+  postSuggestion(ideaId: string, suggestionOwner: string, suggestion: string): Observable<Suggestion> {
+    let data = {
+      ideaId: ideaId,
+      suggestionOwner: suggestionOwner,
+      suggestion: suggestion
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.apiUrl+'/suggestion/', JSON.stringify(data), { headers: headers })
+      .map(res => <Suggestion>res.json());
+  }
+
+  getSuggestion(ideaId: string): Observable<Suggestion[]> {
+    return this.http.get(`${this.apiUrl}/suggestion?ideaId=${ideaId}&sort=updatedAt ASC`)
+      .map(res => <Suggestion[]>res.json());
+  }
+
+  postAction(ideaId: string, suggestionId: string, actionOwner: string, action: string, actionDeadline: string): Observable<Action> {
+    let data = {
+      ideaId: ideaId,
+      suggestionId: suggestionId,
+      actionOwner: actionOwner,
+      action: action,
+      actionDeadline: actionDeadline
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.apiUrl+'/action/', JSON.stringify(data), { headers: headers })
+      .map(res => <Action>res.json());
+  }
+
+  getAction(suggestionId: string): Observable<Action[]> {
+    return this.http.get(`${this.apiUrl}/action?suggestionId=${suggestionId}&sort=updatedAt ASC`)
+      .map(res => <Action[]>res.json());
   }
 
   uploadFile(fileToUpload: any) {

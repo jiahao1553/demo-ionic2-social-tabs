@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { RestService } from './rest-service';
 import { ToastController } from 'ionic-angular';
+import { User } from '../models/user';
 
 @Injectable()
 export class Shared {
@@ -9,7 +11,10 @@ export class Shared {
   username: any;
   nickname: any;
   avatarId: any;
-  constructor(private http: Http, private toastCtrl: ToastController) {
+  user: User;
+  constructor(private http: Http,
+    private toastCtrl: ToastController,
+    private restService: RestService) {
     console.log('Hello Shared Provider');
     this.AreaSet = [
       {id: 'pl', value: 'Production-LCMS'},
@@ -53,5 +58,15 @@ export class Shared {
       duration: 3000
     });
     toast.present();
+  }
+
+  getUserInformation(){
+    this.restService.searchUser("username", this.username).subscribe(data => {
+      this.user = data;
+      console.log('in shared');
+      console.log(this.user);
+    }, (err) => {
+      console.log('Error');
+    });
   }
 }

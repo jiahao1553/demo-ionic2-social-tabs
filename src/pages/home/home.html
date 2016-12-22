@@ -10,7 +10,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-left>
-            <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.ideaOwnerAvatar+'.jpg'">
+            <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.ideaOwnerAvatar+'.avatar'">
           </ion-avatar>
           <h2>{{i.ideaOwnerNickname}}</h2>
           <ion-badge item-right>{{i.area}}</ion-badge>
@@ -18,7 +18,7 @@
         </ion-item>
 
         <ion-card-content>
-          <p (click)="goToDetailPage(p)">{{i.description}}</p>
+          <p>{{i.description}}</p>
           <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'"
           [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+'i.mediaType'">
           <video *ngIf="i.mediaType=='.mp4'" width="320" height="240" controls>
@@ -37,7 +37,7 @@
           </button>
           </ion-col>
           <ion-col width-33 center text-center>
-            <button ion-button full primary clear small icon-left text-center (click)="openComment()">
+            <button ion-button full primary clear small icon-left text-center (click)="presentModal(i)">
             <ion-icon name="text"></ion-icon>
             {{i.suggestionsNo}}
           </button>

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ModalController} from 'ionic-angular';
+import { Shared } from '../../providers/shared';
 import { RestService } from '../../providers/rest-service';
 import { Idea } from '../../models/idea';
-import { CommentModalPage } from '../comment-modal/comment-modal';
-import { DetailPage } from '../detail/detail';
+import { SuggestionPage } from '../suggestion/suggestion';
 
 @Component({
   selector: 'page-home',
@@ -16,20 +16,23 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
-    public restService: RestService) {
-      this.loadIdeasSkipper = 0;
-      let loading = this.loadingCtrl.create({
-        content: "Getting ideas we collected..."
-      });
-      loading.present();
-
-      this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
-        this.ideas = data;
-        loading.dismiss();
-      }, (err) => {
-        loading.dismiss();
-        console.log('Error');
-      });
+    public modalCtrl: ModalController,
+    public restService: RestService,
+    private shared: Shared) {
+        this.loadIdeasSkipper = 0;
+        console.log('initialised again');
+        let loading = this.loadingCtrl.create({
+          content: "Getting ideas we collected..."
+        });
+        loading.present();
+        this.shared.getUserInformation();
+        this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
+          this.ideas = data;
+          loading.dismiss();
+        }, (err) => {
+          loading.dismiss();
+          console.log('Error');
+        });
   }
 
   doInfinite(infiniteScroll) {
@@ -46,11 +49,8 @@ export class HomePage {
     }, 3000);
   }
 
-  goToDetailPage(idea: Idea) {
-    this.navCtrl.push(DetailPage, { idea });
-  }
-
-  openComment() {
-    this.navCtrl.push(CommentModalPage);
+  presentModal(idea: Idea) {
+    let modal = this.modalCtrl.create(SuggestionPage, {idea});
+    modal.present();
   }
 }
