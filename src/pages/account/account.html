@@ -6,50 +6,88 @@
 
 </ion-header>
 
+
 <ion-content>
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item text-wrap>
-        <ion-avatar item-left>
-          <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+avatarId+'.avatar'">
-        </ion-avatar>
-        <h2>{{username}}</h2>
-      </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="secondary">
-      <ion-icon name="create"></ion-icon>
-      Edit Nickname
-    </button>
-      </ion-item-options>
-    </ion-item-sliding>
+<ion-list>
+  <ion-item-sliding>
     <ion-item>
-      <div>
-        <input type="file" #fileInput (change)="addFile()"/>
-      </div>
+      <ion-avatar item-left>
+        <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+avatarId+'.avatar'">
+      </ion-avatar>
+      <h1>{{nickname}}</h1>
+      <p>@{{username}}</p>
     </ion-item>
-</ion-list>
-  <ion-card>
-    <img class="profile-image" src="http://admissions.berkeley.edu/sites/default/files/UCB_landingpage_images_600x300_212.jpg">
-    <h3 text-center padding><b>John</b></h3>
-    <ion-row>
-      <ion-col width-33 center text-center>
-        <button ion-button full primary clear icon-left text-center>
-          <ion-icon name="paper"></ion-icon>
-          12 Posts
-        </button>
-      </ion-col>
-      <ion-col width-33 center text-center>
-        <button ion-button full primary clear icon-left text-center>
-          <ion-icon name="checkmark-circle"></ion-icon>
-          4 Closed
-        </button>
-      </ion-col>
-      <ion-col width-33 center text-center>
-        <button ion-button full primary clear icon-left text-center>
-        <ion-icon name="medal"></ion-icon>
-        1 Fuel
+    <ion-item-options side="left">
+      <button ion-button color="primary" (click)="toggleEditProfile()">
+        <ion-icon name="create"></ion-icon>
+        Update Profile Picture
       </button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+    </ion-item-options>
+    <ion-item-options side="right">
+      <button ion-button color="secondary" (click)="updateNickname()">
+        <ion-icon name="create"></ion-icon>
+        Edit Nickname
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+
+  <ion-item *ngIf="editProfileToggle">
+    <div>
+      <input type="file" #fileInput (change)="updateProfilePicture()"/>
+    </div>
+  </ion-item>
+
+</ion-list>
+
+<ion-item-group>
+<ion-item-divider color="light">Your Results</ion-item-divider>
+
+<button ion-item>
+<ion-icon name="medal" item-left></ion-icon>
+Fuel
+<ion-badge item-right color="secondary">3</ion-badge></button>
+
+<button ion-item>
+<ion-icon name="cash" item-left></ion-icon>
+Total Savings Generated
+<ion-badge item-right color="secondary">S$300k</ion-badge></button>
+
+<button ion-item>
+<ion-icon name="checkmark-circle" item-left></ion-icon>
+Closed Ideas
+<ion-badge item-right>5</ion-badge>
+</button>
+</ion-item-group>
+
+<ion-item-group>
+<ion-item-divider color="light">Your Contribution</ion-item-divider>
+  <button ion-item>
+  <ion-icon name="flash" item-left></ion-icon>
+  Your Ideas
+  <ion-badge item-right>22</ion-badge>
+</button>
+
+    <button ion-item>
+    <ion-icon name="heart" item-left></ion-icon>
+    Liked Ideas
+    <ion-badge item-right>100</ion-badge>
+  </button>
+
+    <button ion-item>
+    <ion-icon name="cafe" item-left></ion-icon>
+    Your Suggestions
+  <ion-badge item-right>50</ion-badge></button>
+
+    <button ion-item>
+    <ion-icon name="build" item-left></ion-icon>
+    Your Actions
+  <ion-badge item-right>18</ion-badge></button>
+</ion-item-group>
+
+<ion-item-group>
+  <ion-item-divider color="light">Settings</ion-item-divider>
+<button ion-item>
+<ion-icon name="log-out" item-left></ion-icon>
+Sign Out</button>
+</ion-item-group>
 </ion-content>

@@ -8,6 +8,7 @@ import { User } from '../models/user';
 @Injectable()
 export class Shared {
   AreaSet: any = [];
+  userId:any;
   username: any;
   nickname: any;
   avatarId: any;
@@ -47,6 +48,7 @@ export class Shared {
       {id: 'tr', value: 'Training'},
       {id: 'ot', value: 'Others'}
     ];
+    this.userId="";
     this.username = "Anonymous";
     this.nickname = "Anonymous";
     this.avatarId = "5859f2943c5f0e00047e4cb6";
@@ -63,6 +65,7 @@ export class Shared {
   getUserInformation(username: string){
     this.restService.searchUser("username", username).subscribe(data => {
       this.users = data;
+      this.userId = this.users[0].id;
       this.username = this.users[0].username;
       this.nickname = this.users[0].nickname;
       this.avatarId = this.users[0].avatarId;

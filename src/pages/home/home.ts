@@ -13,28 +13,34 @@ export class HomePage {
   ideas: Idea[];
   moreIdeas: Idea[];
   loadIdeasSkipper: number;
+  refreshToggle: boolean;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
     public restService: RestService,
     private shared: Shared) {
-        this.loadIdeasSkipper = 0;
-        console.log('initialised again');
-        let loading = this.loadingCtrl.create({
-          content: "Getting ideas we collected..."
-        });
-        loading.present();
-        this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
-          this.ideas = data;
-          loading.dismiss();
-        }, (err) => {
-          loading.dismiss();
-          console.log('Error');
-        });
+      this.refresh();
+  }
+
+  refresh(){
+    this.refreshToggle = false;
+      this.loadIdeasSkipper = 0;
+      let loading = this.loadingCtrl.create({
+        content: "Getting ideas we collected..."
+      });
+      loading.present();
+      this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
+        this.ideas = data;
+        loading.dismiss();
+      }, (err) => {
+        loading.dismiss();
+        console.log('Error');
+      });
   }
 
   doInfinite(infiniteScroll) {
+    this.refreshToggle = true;
     this.loadIdeasSkipper+=5;
     console.log(this.loadIdeasSkipper);
     setTimeout(() => {

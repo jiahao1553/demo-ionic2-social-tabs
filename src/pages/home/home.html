@@ -52,6 +52,9 @@
       </ion-card>
     </ion-col>
   </ion-row>
+  <ion-fab right bottom *ngIf="refreshToggle">
+  <button ion-fab (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+  </ion-fab>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
