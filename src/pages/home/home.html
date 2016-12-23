@@ -12,7 +12,7 @@
           <ion-avatar item-left>
             <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.ideaOwnerAvatar+'.avatar'">
           </ion-avatar>
-          <h2>{{i.ideaOwnerNickname}}</h2>
+          <h2>{{i.ideaOwner}}</h2>
           <ion-badge item-right>{{i.area}}</ion-badge>
           <p>{{i.updatedAt}}</p>
         </ion-item>
@@ -48,7 +48,7 @@
         </button>
           </ion-col>
         </ion-row>
-        <p padding><i>{{i.latestSuggestionOwnerNickname}} suggested: {{i.latestSuggestion}}</i></p>
+        <p padding><i>{{i.latestSuggestionOwner}} suggested: {{i.latestSuggestion}}</i></p>
       </ion-card>
     </ion-col>
   </ion-row>

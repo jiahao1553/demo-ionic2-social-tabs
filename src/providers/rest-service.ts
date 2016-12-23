@@ -30,9 +30,9 @@ export class RestService {
       .map(res => <User>res.json());
   }
 
-  searchUser(key: string, value: string): Observable<User> {
+  searchUser(key: string, value: string): Observable<User[]> {
     return this.http.get(`${this.apiUrl}/user?${key}=${value}`)
-      .map(res => <User>res.json());
+      .map(res => <User[]>res.json());
   }
 
   updateUser(id: string, nickname: string, avatarId: string): Observable<User> {
@@ -47,7 +47,6 @@ export class RestService {
   }
 
   postIdea(ideaOwner:string,
-  ideaOwnerNickname: string,
   ideaOwnerAvatar: string,
   description: string,
   mediaId: string,
@@ -57,11 +56,9 @@ export class RestService {
   likesNo: number,
   suggestionsNo: number,
   latestSuggestionOwner: string,
-  latestSuggestionOwnerNickname: string,
   latestSuggestion: string): Observable<Idea> {
     let data = {
       ideaOwner : ideaOwner,
-      ideaOwnerNickname : ideaOwnerNickname,
       ideaOwnerAvatar : ideaOwnerAvatar,
       description : description,
       mediaId : mediaId,
@@ -71,7 +68,6 @@ export class RestService {
       likesNo : likesNo,
       suggestionsNo : suggestionsNo,
       latestSuggestionOwner : latestSuggestionOwner,
-      latestSuggestionOwnerNickname : latestSuggestionOwnerNickname,
       latestSuggestion : latestSuggestion,
     };
     let headers = new Headers();

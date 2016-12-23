@@ -37,7 +37,7 @@ export class LoginPage {
       this.restService.getUser(this.Username, this.Password).subscribe(data => {
         loading.dismiss();
         // console.log(data);
-        this.shared.username = this.Username;
+        this.shared.getUserInformation(this.Username);
         if (Object.keys(data).length == 0) {
           console.log('Object is empty');
           let alert = this.alertCtrl.create({

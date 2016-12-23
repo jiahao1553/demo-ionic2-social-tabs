@@ -1,7 +1,6 @@
 export interface Idea {
   id: string;
   ideaOwner:string;
-  ideaOwnerNickname: string;
   ideaOwnerAvatar: string;
   description: string;
   mediaId: string;
@@ -12,6 +11,5 @@ export interface Idea {
   likesNo: number;
   suggestionsNo: number;
   latestSuggestionOwner: string;
-  latestSuggestionOwnerNickname: string;
   latestSuggestion: string;
 }

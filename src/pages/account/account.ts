@@ -10,6 +10,7 @@ import { Shared } from '../../providers/shared';
 })
 export class AccountPage {
 username:string;
+nickname:string
 avatarId:string;
 @ViewChild("fileInput") fileInput;
 fi: any;
@@ -20,15 +21,13 @@ filename: string;
     private alertCtrl: AlertController,
     private restService: RestService,
     private shared: Shared) {
-    this.username=<string>this.shared.user.username;
-    this.avatarId=<string>this.shared.user.avatarId;
-    console.log(this.username + this.avatarId);
+      this.username=this.shared.username;
+      this.nickname=this.shared.nickname;
+      this.avatarId=this.shared.avatarId;
   }
 
   ionViewDidLoad() {
     console.log('Hello AccountPage Page');
-    console.log(this.username);
-    console.log(this.avatarId);
   }
 
   // addFile(){

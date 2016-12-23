@@ -25,7 +25,6 @@ export class HomePage {
           content: "Getting ideas we collected..."
         });
         loading.present();
-        this.shared.getUserInformation();
         this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
           this.ideas = data;
           loading.dismiss();

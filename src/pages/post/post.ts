@@ -11,7 +11,6 @@ import { TabsPage } from '../tabs/tabs';
 export class PostPage {
   @ViewChild("fileInput") fileInput;
   ideaOwner:string;
-  ideaOwnerNickname: string;
   ideaOwnerAvatar: string;
   description: string;
   mediaId: string;
@@ -21,7 +20,6 @@ export class PostPage {
   likesNo: number;
   suggestionsNo: number;
   latestSuggestionOwner: string;
-  latestSuggestionOwnerNickname: string;
   latestSuggestion: string;
   areas: any = [];
   fi: any;
@@ -37,7 +35,6 @@ export class PostPage {
     public restService: RestService,
     public navParams: NavParams) {
     this.ideaOwner = shared.username;
-    this.ideaOwnerNickname = shared.nickname;
     this.ideaOwnerAvatar = shared.avatarId;
     this.description = "";
     this.mediaId = "";
@@ -47,7 +44,6 @@ export class PostPage {
     this.likesNo = 0;
     this.suggestionsNo = 1;
     this.latestSuggestionOwner = shared.username;
-    this.latestSuggestionOwnerNickname = shared.nickname;
     this.latestSuggestion = "";
     this.areas = this.shared.AreaSet;
     this.filename ="";
@@ -81,10 +77,10 @@ export class PostPage {
           .subscribe(res => {
             this.mediaId=res.json();
             this.restService.postIdea(
-              this.ideaOwner, this.ideaOwnerNickname, this.ideaOwnerAvatar,
+              this.ideaOwner,  this.ideaOwnerAvatar,
               this.description, res.json(), this.mediaType,
               this.area, this.status, this.likesNo, this.suggestionsNo,
-              this.latestSuggestionOwner, this.latestSuggestionOwnerNickname, this.latestSuggestion)
+              this.latestSuggestionOwner, this.latestSuggestion)
               .subscribe(data => {
                 console.log(data);
                 this.shared.toast('Idea uploaded');
@@ -111,10 +107,10 @@ export class PostPage {
       }
       else{
         this.restService.postIdea(
-          this.ideaOwner, this.ideaOwnerNickname, this.ideaOwnerAvatar,
+          this.ideaOwner, this.ideaOwnerAvatar,
           this.description, this.mediaId, this.mediaType,
           this.area, this.status, this.likesNo, this.suggestionsNo,
-          this.latestSuggestionOwner, this.latestSuggestionOwnerNickname, this.latestSuggestion)
+          this.latestSuggestionOwner, this.latestSuggestion)
           .subscribe(data => {
             this.shared.toast('Idea sent!');
             loading.dismiss();

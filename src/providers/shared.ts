@@ -11,7 +11,7 @@ export class Shared {
   username: any;
   nickname: any;
   avatarId: any;
-  user: User;
+  users: User[];
   constructor(private http: Http,
     private toastCtrl: ToastController,
     private restService: RestService) {
@@ -60,11 +60,12 @@ export class Shared {
     toast.present();
   }
 
-  getUserInformation(){
-    this.restService.searchUser("username", this.username).subscribe(data => {
-      this.user = data;
-      console.log('in shared');
-      console.log(this.user);
+  getUserInformation(username: string){
+    this.restService.searchUser("username", username).subscribe(data => {
+      this.users = data;
+      this.username = this.users[0].username;
+      this.nickname = this.users[0].nickname;
+      this.avatarId = this.users[0].avatarId;
     }, (err) => {
       console.log('Error');
     });
