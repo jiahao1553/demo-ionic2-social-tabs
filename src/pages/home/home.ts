@@ -54,7 +54,7 @@ export class HomePage {
     }, 3000);
   }
 
-  presentModal(idea: Idea) {
+  modalSuggestion(idea: Idea) {
     let modal = this.modalCtrl.create(SuggestionPage, {idea});
     modal.present();
   }

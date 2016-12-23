@@ -6,12 +6,11 @@ import { PostPage } from '../pages/post/post';
 import { SearchPage } from '../pages/search/search';
 import { AccountPage } from '../pages/account/account';
 import { TabsPage } from '../pages/tabs/tabs';
-import {LoginPage} from '../pages/login/login';
-import {Shared} from '../providers/shared';
+import { LoginPage } from '../pages/login/login';
+import { Shared } from '../providers/shared';
 import { RestService } from '../providers/rest-service';
-import { CommentModalPage } from '../pages/comment-modal/comment-modal';
-import { CalculateModalPage } from '../pages/calculate-modal/calculate-modal';
-import { ReviewModalPage } from '../pages/review-modal/review-modal';
+import { CalculatePage } from '../pages/calculate/calculate';
+import { ReviewPage } from '../pages/review/review';
 import { SuggestionPage } from '../pages/suggestion/suggestion';
 import { ActionPage } from '../pages/action/action';
 
@@ -24,9 +23,8 @@ import { ActionPage } from '../pages/action/action';
     AccountPage,
     TabsPage,
     LoginPage,
-    CommentModalPage,
-    CalculateModalPage,
-    ReviewModalPage,
+    CalculatePage,
+    ReviewPage,
     SuggestionPage,
     ActionPage
   ],
@@ -56,9 +54,8 @@ tabsPlacement: 'top',
     AccountPage,
     TabsPage,
     LoginPage,
-    CommentModalPage,
-    CalculateModalPage,
-    ReviewModalPage,
+    CalculatePage,
+    ReviewPage,
     SuggestionPage,
     ActionPage
   ],

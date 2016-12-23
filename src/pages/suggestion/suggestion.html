@@ -21,7 +21,7 @@
       <h2>{{i.ideaOwnerNickname}}</h2>
       <ion-badge item-right>{{i.area}}</ion-badge>
       <p>@{{i.ideaOwner}}</p>
-      <p>{{i.updatedAt}}</p>
+      <p>{{i.updatedAt.substr(0, 10)}}</p>
     </ion-item>
 
     <ion-card-content>
@@ -56,8 +56,10 @@
     <ion-list>
       <ion-item-sliding *ngFor="let s of suggestions">
         <ion-item text-wrap (click)="modalAction(s)">
-          <p><b>{{s.suggestionOwner}} suggested: </b>{{s.suggestion}}</p>
-        </ion-item>
+            <h3>{{s.suggestionOwner}}</h3>
+            <small>{{s.updatedAt.substr(0, 10)}}</small>
+            <p><i>{{s.suggestion}}</i></p>
+          </ion-item>
         <ion-item-options side="right">
           <button ion-button color="danger">
         <ion-icon name="trash"></ion-icon>

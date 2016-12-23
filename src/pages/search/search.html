@@ -26,39 +26,39 @@
     </ion-select>
   </ion-item>
   <ion-item>
-  <ion-label>Post Date</ion-label>
-  <ion-select [(ngModel)]="startDate">
-    <ion-option value=86400>Today</ion-option>
-    <ion-option value=604800>Last 1 week</ion-option>
-    <ion-option value=2592000>Last 1 month</ion-option>
-    <ion-option value=7776000>Last 90 days</ion-option>
-  </ion-select>
-  </ion-item>
+    <ion-label>Anytime From</ion-label>
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Anytime To</ion-label>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate"></ion-datetime>
+      </ion-item>
 </ion-item-group>
 
     <ion-item-group>
     <ion-item-divider color="light">Result by Ideas</ion-item-divider>
-  <button ion-item text-wrap *ngFor="let i of ideas">
-    <h1>{{i.ideaOwner}}</h1>
-    <h3>{{i.updatedAt}}</h3>
-    <p>{{i.idea}}</p>
+  <button ion-item text-wrap *ngFor="let i of ideas" (click)="modalSuggestion(i)">
+    <ion-badge item-right>{{i.area}}</ion-badge>
+    <h2>{{i.ideaOwner}}</h2>
+    <small>{{i.updatedAt.substr(0, 10)}}</small>
+    <p>{{i.description}}</p>
   </button>
 </ion-item-group>
 
 <ion-item-group>
 <ion-item-divider color="light">Result by Suggestions</ion-item-divider>
-<button ion-item text-wrap *ngFor="let s of suggestions">
-<h1>{{s.suggestionOwner}}</h1>
-<h3>{{s.updatedAt}}</h3>
+<button ion-item text-wrap *ngFor="let s of suggestions" (click)="loadIdea(s.ideaId)">
+<h2>{{s.suggestionOwner}}</h2>
+<small>{{s.updatedAt.substr(0, 10)}}</small>
 <p>{{s.suggestion}}</p>
 </button>
 </ion-item-group>
 
 <ion-item-group>
 <ion-item-divider color="light">Result by Actions</ion-item-divider>
-<button ion-item text-wrap *ngFor="let a of actions">
-<h1>{{a.actionOwner}}</h1>
-<h3>{{a.updatedAt}}</h3>
+<button ion-item text-wrap *ngFor="let a of actions" (click)="loadIdea(a.ideaId)">
+<h2>{{a.actionOwner}}</h2>
+<small>{{a.updatedAt.substr(0, 10)}}</small>
 <p>{{a.action}}</p>
 </button>
 </ion-item-group>

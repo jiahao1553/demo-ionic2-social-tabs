@@ -73,4 +73,9 @@ export class Shared {
       console.log('Error');
     });
   }
+
+  getToday():string{
+    var utc = new Date().toJSON().slice(0,10);
+    return utc;
+  }
 }

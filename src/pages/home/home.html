@@ -14,7 +14,7 @@
           </ion-avatar>
           <h2>{{i.ideaOwner}}</h2>
           <ion-badge item-right>{{i.area}}</ion-badge>
-          <p>{{i.updatedAt}}</p>
+          <p>{{i.updatedAt.substr(0, 10)}}</p>
         </ion-item>
 
         <ion-card-content>
@@ -37,7 +37,7 @@
           </button>
           </ion-col>
           <ion-col width-33 center text-center>
-            <button ion-button full primary clear small icon-left text-center (click)="presentModal(i)">
+            <button ion-button full primary clear small icon-left text-center (click)="modalSuggestion(i)">
             <ion-icon name="text"></ion-icon>
             {{i.suggestionsNo}}
           </button>
@@ -48,7 +48,10 @@
         </button>
           </ion-col>
         </ion-row>
-        <p padding><i>{{i.latestSuggestionOwner}} suggested: {{i.latestSuggestion}}</i></p>
+        <ion-item padding>
+          <h3><i>{{i.latestSuggestionOwner}}</i></h3>
+          <p><i>{{i.latestSuggestion}}</i></p>
+        </ion-item>
       </ion-card>
     </ion-col>
   </ion-row>

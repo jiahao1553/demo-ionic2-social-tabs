@@ -29,7 +29,7 @@ export class ActionPage {
 
     this.action = "";
     this.actionOwner = "";
-    this.actionDeadline = "2017-01-01";
+    this.actionDeadline = this.shared.getToday();
 
     this.suggestion = this.navParams.get('suggestion');
     this.restService.getAction(this.suggestion.id).subscribe(data => {

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, AlertController, ViewController } from 'ionic-angular';
-import { Content } from 'ionic-angular';
+import { App, Content } from 'ionic-angular';
+import { LoginPage } from '../login/login';
 // import { Idea } from '../../models/idea';
 // import { User } from '../../models/user';
 import { Shared } from '../../providers/shared';
@@ -23,7 +24,8 @@ export class AccountPage {
   @ViewChild(Content) content: Content;
   editProfileToggle: boolean;
 
-  constructor(public navCtrl: NavController,
+  constructor(private app: App,
+    public navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private viewCtrl: ViewController,
@@ -149,5 +151,9 @@ export class AccountPage {
       ]
     });
     prompt.present();
+  }
+
+  goToLogin(){
+    this.app.getRootNav().push(LoginPage);
   }
 }

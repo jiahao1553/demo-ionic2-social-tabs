@@ -14,12 +14,13 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-header>{{suggestion.suggestion}}</ion-card-header>
+    <ion-card-header><h1>{{suggestion.suggestion}}</h1></ion-card-header>
     <ion-list>
       <ion-item-sliding *ngFor="let a of actions">
         <ion-item>
-    <p><b>{{a.actionOwner}}'s action: </b>{{a.action}}</p>
-    <p>Deadline: {{a.actionDeadline}}</p>
+    <h3>By {{a.actionOwner}}</h3>
+    <small>Deadline: {{a.actionDeadline}}</small>
+    <p><i>{{a.action}}</i></p>
   </ion-item>
     <ion-item-options side="right">
       <button ion-button color="danger">
