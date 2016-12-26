@@ -8,10 +8,11 @@ import { User } from '../models/user';
 @Injectable()
 export class Shared {
   AreaSet: any = [];
-  userId:any;
+  userId: any;
   username: any;
-  nickname: any;
+  fullname: any;
   avatarId: any;
+  fuel: any;
   users: User[];
   constructor(private http: Http,
     private toastCtrl: ToastController,
@@ -48,10 +49,11 @@ export class Shared {
       {id: 'tr', value: 'Training'},
       {id: 'ot', value: 'Others'}
     ];
-    this.userId="";
+    this.userId = "";
     this.username = "Anonymous";
-    this.nickname = "Anonymous";
-    this.avatarId = "5859f2943c5f0e00047e4cb6";
+    this.fullname = "Anonymous";
+    this.avatarId = "";
+    this.fuel = 0;
   }
 
   toast(message: string){
@@ -60,18 +62,6 @@ export class Shared {
       duration: 3000
     });
     toast.present();
-  }
-
-  getUserInformation(username: string){
-    this.restService.searchUser("username", username).subscribe(data => {
-      this.users = data;
-      this.userId = this.users[0].id;
-      this.username = this.users[0].username;
-      this.nickname = this.users[0].nickname;
-      this.avatarId = this.users[0].avatarId;
-    }, (err) => {
-      console.log('Error');
-    });
   }
 
   getToday():string{

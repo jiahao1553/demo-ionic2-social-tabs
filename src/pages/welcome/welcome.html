@@ -1,0 +1,39 @@
+<ion-header>
+</ion-header>
+
+
+<ion-content class="tutorial-page" padding>
+  <ion-slides pager [options]="mySlideOptions">
+    <ion-slide *ngFor="let slide of slides">
+      <ion-toolbar>
+        <!-- <ion-buttons end>
+          <button ion-button color="primary">Skip</button>
+        </ion-buttons> -->
+      </ion-toolbar>
+      <!-- <img [src]="slide.image" class="slide-image"/> -->
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+    <ion-slide>
+      <ion-toolbar>
+      </ion-toolbar>
+      <!-- <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/> -->
+      <h2 class="slide-title">Let's make our profile easier to be recognized!</h2>
+      <ion-item>
+        <ion-label>Fullname</ion-label>
+        <ion-input [(ngModel)]="fullname" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <div>
+          <input type="file" #fileInput (change)="addFile()"/>
+        </div>
+      </ion-item>
+      <small><i>Recommended to use image with .jpg extension</i></small>
+      <button ion-button large clear icon-right color="primary" (click)="post()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

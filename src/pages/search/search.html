@@ -13,13 +13,13 @@
   <ion-item-divider color="light">Filter</ion-item-divider>
     <ion-item>
       <ion-label>Area</ion-label>
-      <ion-select [(ngModel)]="area">
+      <ion-select [(ngModel)]="area" (ionChange)="searchIdea(area)">
       <ion-option *ngFor="let a of areas" [value]="a.value">{{a.value}}</ion-option>
       </ion-select>
   </ion-item>
     <ion-item>
   <ion-label>Status</ion-label>
-    <ion-select [(ngModel)]="status">
+    <ion-select [(ngModel)]="status" (ionChange)="searchIdea(status)">
       <ion-option value="Open">Open</ion-option>
       <ion-option value="Going">Going</ion-option>
       <ion-option value="Closed">Closed</ion-option>
@@ -27,11 +27,11 @@
   </ion-item>
   <ion-item>
     <ion-label>Anytime From</ion-label>
-    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate"></ion-datetime>
+    <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="startDate" (ionChange)="searchAll(startDate)"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label>Anytime To</ion-label>
-      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate"></ion-datetime>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="endDate" (ionChange)="searchAll(endDate)"></ion-datetime>
       </ion-item>
 </ion-item-group>
 
@@ -62,5 +62,7 @@
 <p>{{a.action}}</p>
 </button>
 </ion-item-group>
-
+<ion-fab right bottom *ngIf="refreshToggle">
+<button ion-fab color="danger" (click)="refresh()"><ion-icon name="close"></ion-icon></button>
+</ion-fab>
 </ion-content>

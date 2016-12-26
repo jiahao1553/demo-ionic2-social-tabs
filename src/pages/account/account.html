@@ -8,25 +8,25 @@
 
 
 <ion-content>
-<ion-list>
-  <ion-item-sliding>
+<!-- <ion-list>
+  <ion-item-sliding> -->
     <ion-item>
       <ion-avatar item-left>
-        <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+avatarId+'.avatar'">
+        <img [src]="restService.gridfsUrl+'/media/'+shared.avatarId+'.avatar'">
       </ion-avatar>
-      <h1>{{nickname}}</h1>
-      <p>@{{username}}</p>
+      <h1>{{shared.fullname}}</h1>
+      <p>@{{shared.username}}</p>
     </ion-item>
-    <ion-item-options side="left">
+    <!-- <ion-item-options side="left">
       <button ion-button color="primary" (click)="toggleEditProfile()">
         <ion-icon name="create"></ion-icon>
         Update Profile Picture
       </button>
     </ion-item-options>
     <ion-item-options side="right">
-      <button ion-button color="secondary" (click)="updateNickname()">
+      <button ion-button color="secondary" (click)="updatefullname()">
         <ion-icon name="create"></ion-icon>
-        Edit Nickname
+        Edit fullname
       </button>
     </ion-item-options>
   </ion-item-sliding>
@@ -36,21 +36,20 @@
       <input type="file" #fileInput (change)="updateProfilePicture()"/>
     </div>
   </ion-item>
-
-</ion-list>
+</ion-list> -->
 
 <ion-item-group>
-<ion-item-divider color="light">Your Results</ion-item-divider>
+<ion-item-divider color="light">Performance</ion-item-divider>
 
 <button ion-item>
 <ion-icon name="medal" item-left></ion-icon>
 Fuel
-<ion-badge item-right color="secondary">3</ion-badge></button>
+<ion-badge item-right color="secondary">{{shared.fuel}}</ion-badge></button>
 
-<button ion-item>
+<!-- <button ion-item>
 <ion-icon name="cash" item-left></ion-icon>
 Total Savings Generated
-<ion-badge item-right color="secondary">S$300k</ion-badge></button>
+<ion-badge item-right color="secondary">S$300k</ion-badge></button> -->
 
 <button ion-item>
 <ion-icon name="checkmark-circle" item-left></ion-icon>

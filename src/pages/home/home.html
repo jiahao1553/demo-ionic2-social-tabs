@@ -10,7 +10,7 @@
       <ion-card>
         <ion-item>
           <ion-avatar item-left>
-            <img [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.ideaOwnerAvatar+'.avatar'">
+            <img [src]="gridfsUrl+'/media/'+i.ideaOwnerAvatar+'.avatar'">
           </ion-avatar>
           <h2>{{i.ideaOwner}}</h2>
           <ion-badge item-right>{{i.area}}</ion-badge>
@@ -20,20 +20,22 @@
         <ion-card-content>
           <p>{{i.description}}</p>
           <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'"
-          [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+'i.mediaType'">
-          <video *ngIf="i.mediaType=='.mp4'" width="320" height="240" controls>
-            <source [src]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+'i.mediaType'" type="video/mp4">
+          [src]="gridfsUrl+'/media/'+i.mediaId+'i.mediaType'">
+
+          <video *ngIf="i.mediaType=='.mp4'" width="240" height="180" controls>
+            <source [src]="gridfsUrl+'/media/'+i.mediaId+'i.mediaType'" type="video/mp4">
           </video>
+
           <a ion-item text-center *ngIf="!(i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'||i.mediaType=='.mp4'||!i.mediaType)"
-          [href]="'https://protected-temple-59341.herokuapp.com/media/'+i.mediaId+i.mediaType" target="_blank">
+          [href]="gridfsUrl+'/media/'+i.mediaId+i.mediaType" target="_blank">
             <ion-icon name="cloud-download"></ion-icon>{{i.mediaType}}</a>
         </ion-card-content>
 
         <ion-row>
           <ion-col width-33 center text-center>
-            <button ion-button clear full primary small icon-left text-center>
+            <button ion-button clear full primary small icon-left text-center (click)="like(i)">
             <ion-icon name="thumbs-up"></ion-icon>
-            {{i.likesNo}}
+            {{i.likes.length}}
           </button>
           </ion-col>
           <ion-col width-33 center text-center>
@@ -49,7 +51,7 @@
           </ion-col>
         </ion-row>
         <ion-item padding>
-          <h3><i>{{i.latestSuggestionOwner}}</i></h3>
+          <h3><i>{{i.latestSuggestionOwnerFullname}}</i></h3>
           <p><i>{{i.latestSuggestion}}</i></p>
         </ion-item>
       </ion-card>

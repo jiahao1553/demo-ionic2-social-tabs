@@ -6,28 +6,30 @@ import { User } from '../models/user';
 import { Idea } from '../models/idea';
 import { Suggestion } from '../models/suggestion';
 import { Action } from '../models/action';
-import { AlertController } from 'ionic-angular';
+import { Review } from '../models/review';
 
 @Injectable()
 export class RestService {
+  authUrl = 'http://10.179.131.25:58385/api';
   apiUrl = 'https://floating-anchorage-35981.herokuapp.com';
   gridfsUrl = 'https://protected-temple-59341.herokuapp.com';
 
-  constructor(public http: Http,
-    public alertCtrl: AlertController) {
+  constructor(public http: Http) {
     console.log('Hello RestService Provider');
   }
 
-  postUser(username, email, password): Observable<User> {
+  postUser(username: string, fullname: string, avatarId: string, fuel: number): Observable<User> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(`${this.apiUrl}/user/create?username=${username}&password=${password}&email=${email}`, { headers: headers })
+    return this.http.post(`${this.apiUrl}/user?username=${username}&fullname=${fullname}&avatarId=${avatarId}&fuel=${fuel}`, { headers: headers })
       .map(res => <User>res.json());
   }
 
-  getUser(name, password): Observable<User[]> {
-    return this.http.get(`${this.apiUrl}/user?username=${name}&password=${password}`)//working
-      .map(res => <User[]>res.json());
+  authUser(name, password): Observable<boolean> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(`${this.authUrl}/user?username=${name}&password=${password}`, { headers: headers })//working
+      .map(res => <boolean>res.json());
   }
 
   searchUser(key: string, value: string): Observable<User[]> {
@@ -35,10 +37,11 @@ export class RestService {
       .map(res => <User[]>res.json());
   }
 
-  updateUser(id: string, nickname: string, avatarId: string): Observable<User> {
+  updateUser(id: string, fullname: string, avatarId: string, fuel: number): Observable<User> {
     let data = {
-      nickname: nickname,
+      fullname: fullname,
       avatarId: avatarId,
+      fuel: fuel
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -47,32 +50,61 @@ export class RestService {
   }
 
   postIdea(ideaOwner:string,
+    ideaOwnerFullname: string,
   ideaOwnerAvatar: string,
   description: string,
   mediaId: string,
   mediaType: string,
   area: string,
   status: string,
-  likesNo: number,
+  likes: string[],
+  likesString: string,
   suggestionsNo: number,
   latestSuggestionOwner: string,
+  latestSuggestionOwnerFullname: string,
   latestSuggestion: string): Observable<Idea> {
     let data = {
       ideaOwner : ideaOwner,
+      ideaOwnerFullname: ideaOwnerFullname,
       ideaOwnerAvatar : ideaOwnerAvatar,
       description : description,
       mediaId : mediaId,
       mediaType : mediaType,
       area : area,
       status : status,
-      likesNo : likesNo,
+      likes : likes,
+      likesString: likesString,
       suggestionsNo : suggestionsNo,
       latestSuggestionOwner : latestSuggestionOwner,
+      latestSuggestionOwnerFullname: latestSuggestionOwnerFullname,
       latestSuggestion : latestSuggestion,
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post(this.apiUrl+'/idea/', JSON.stringify(data), { headers: headers })
+      .map(res => <Idea>res.json());
+  }
+
+  updateIdea(ideaId:string,
+  status: string,
+  likes: string[],
+  likesString: string,
+  suggestionsNo: number,
+  latestSuggestionOwner: string,
+  latestSuggestionOwnerFullname: string,
+  latestSuggestion: string): Observable<Idea> {
+    let data = {
+      status : status,
+      likes : likes,
+      likesString: likesString,
+      suggestionsNo : suggestionsNo,
+      latestSuggestionOwner : latestSuggestionOwner,
+      latestSuggestionOwnerFullname: latestSuggestionOwnerFullname,
+      latestSuggestion : latestSuggestion,
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.apiUrl+'/idea/'+ideaId, JSON.stringify(data), { headers: headers })
       .map(res => <Idea>res.json());
   }
 
@@ -91,10 +123,11 @@ export class RestService {
         .map(res => <Idea[]>res.json());
   }
 
-  postSuggestion(ideaId: string, suggestionOwner: string, suggestion: string): Observable<Suggestion> {
+  postSuggestion(ideaId: string, suggestionOwner: string, suggestionOwnerFullname: string, suggestion: string): Observable<Suggestion> {
     let data = {
       ideaId: ideaId,
       suggestionOwner: suggestionOwner,
+      suggestionOwnerFullname: suggestionOwnerFullname,
       suggestion: suggestion
     };
     let headers = new Headers();
@@ -142,6 +175,13 @@ export class RestService {
     input.append("file", fileToUpload);
     return this.http
       .post(this.gridfsUrl + "/file/", input);
+  }
+
+  postReview(review: Review): Observable<Review> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.apiUrl+'/review/', JSON.stringify(review), { headers: headers })
+      .map(res => <Review>res.json());
   }
 
 }

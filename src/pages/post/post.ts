@@ -11,15 +11,18 @@ import { TabsPage } from '../tabs/tabs';
 export class PostPage {
   @ViewChild("fileInput") fileInput;
   ideaOwner:string;
+  ideaOwnerFullname: string;
   ideaOwnerAvatar: string;
   description: string;
   mediaId: string;
   mediaType: string;
   area: string;
   status: string;
-  likesNo: number;
+  likes: string[];
+  likesString: string;
   suggestionsNo: number;
   latestSuggestionOwner: string;
+  latestSuggestionOwnerFullname: string;
   latestSuggestion: string;
   areas: any = [];
   fi: any;
@@ -35,18 +38,21 @@ export class PostPage {
     public restService: RestService,
     public navParams: NavParams) {
     this.ideaOwner = shared.username;
+    this.ideaOwnerFullname = shared.fullname;
     this.ideaOwnerAvatar = shared.avatarId;
     this.description = "";
     this.mediaId = "";
     this.mediaType = "";
     this.area = "";
     this.status = "Open";
-    this.likesNo = 0;
+    this.likes = [];
+    this.likesString = "";
     this.suggestionsNo = 1;
     this.latestSuggestionOwner = shared.username;
+    this.latestSuggestionOwnerFullname = shared.fullname;
     this.latestSuggestion = "";
     this.areas = this.shared.AreaSet;
-    this.filename ="";
+    this.filename = "";
     this.fileExist = false;
   }
 
@@ -77,10 +83,10 @@ export class PostPage {
           .subscribe(res => {
             this.mediaId=res.json();
             this.restService.postIdea(
-              this.ideaOwner,  this.ideaOwnerAvatar,
+              this.ideaOwner, this.ideaOwnerFullname, this.ideaOwnerAvatar,
               this.description, res.json(), this.mediaType,
-              this.area, this.status, this.likesNo, this.suggestionsNo,
-              this.latestSuggestionOwner, this.latestSuggestion)
+              this.area, this.status, this.likes, this.likesString, this.suggestionsNo,
+              this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
               .subscribe(data => {
                 console.log(data);
                 this.shared.toast('Idea uploaded');
@@ -107,10 +113,10 @@ export class PostPage {
       }
       else{
         this.restService.postIdea(
-          this.ideaOwner, this.ideaOwnerAvatar,
+          this.ideaOwner, this.ideaOwnerFullname, this.ideaOwnerAvatar,
           this.description, this.mediaId, this.mediaType,
-          this.area, this.status, this.likesNo, this.suggestionsNo,
-          this.latestSuggestionOwner, this.latestSuggestion)
+          this.area, this.status, this.likes, this.likesString, this.suggestionsNo,
+          this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
           .subscribe(data => {
             this.shared.toast('Idea sent!');
             loading.dismiss();

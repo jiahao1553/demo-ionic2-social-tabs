@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { WelcomePage } from '../welcome/welcome';
 import { RestService } from '../../providers/rest-service';
 import { Shared } from '../../providers/shared';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'page-login',
@@ -10,15 +12,14 @@ import { Shared } from '../../providers/shared';
 })
 export class LoginPage {
   Username: string;
-  Email: string;
   Password: string;
-
+  users: User[];
   constructor(
-    public navCtrl: NavController,
-    public restService: RestService,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    public shared: Shared) {
+    private navCtrl: NavController,
+    private restService: RestService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
+    private shared: Shared) {
     this.Username = "";
     this.Password = "";
   }
@@ -30,35 +31,54 @@ export class LoginPage {
   login() {
     if ((this.Username.trim().length > 0)
       && (this.Password.trim().length > 0)) {
+
       let loading = this.loadingCtrl.create({
         content: "Signing in..."
       });
       loading.present();
-      this.restService.getUser(this.Username, this.Password).subscribe(data => {
-        loading.dismiss();
-        // console.log(data);
-        this.shared.getUserInformation(this.Username);
-        if (Object.keys(data).length == 0) {
-          console.log('Object is empty');
-          let alert = this.alertCtrl.create({
-            title: 'Login Failed',
-            message: 'Username or Password is incorrect',
-            buttons: ['Try again']
+
+      // this.restService.authUser(this.Username, this.Password).subscribe(data => {
+      //   loading.dismiss();
+      //   if (data) {
+
+          // this.userExist = this.shared.getUserInformation(this.Username);
+          this.restService.searchUser("username", this.Username).subscribe(data => {
+            loading.dismiss();
+            this.users = data;
+            if (this.users.length>0){
+              this.shared.userId = this.users[0].id;
+              this.shared.username = this.users[0].username;
+              this.shared.fullname = this.users[0].fullname;
+              this.shared.avatarId = this.users[0].avatarId;
+              this.shared.fuel = this.users[0].fuel;
+              this.navCtrl.setRoot(TabsPage);
+              this.shared.toast("Logged in as " + this.Username);
+            }
+            else{
+              this.navCtrl.push(WelcomePage, {username: this.Username});
+            }
+          }, (err) => {
+            loading.dismiss();
+            console.log('Error');
           });
-          alert.present();
-        }
-        else {
-          this.navCtrl.setRoot(TabsPage);
-        }
-      }, (err) => {
-        loading.dismiss();
-        let alert = this.alertCtrl.create({
-          title: 'Login Failed',
-          message: err,
-          buttons: ['Try again']
-        });
-        alert.present();
-      });
+      //   }
+      //   else {
+      //     let alert = this.alertCtrl.create({
+      //       title: 'Login Failed',
+      //       message: 'Username or Password is incorrect',
+      //       buttons: ['Try again']
+      //     });
+      //     alert.present();
+      //   }
+      // }, (err) => {
+      //   loading.dismiss();
+      //   let alert = this.alertCtrl.create({
+      //     title: 'Login Failed',
+      //     message: err,
+      //     buttons: ['Try again']
+      //   });
+      //   alert.present();
+      // });
     }
     else {
       let alert = this.alertCtrl.create({
@@ -69,7 +89,6 @@ export class LoginPage {
       alert.present();
       this.Username = "";
       this.Password = "";
-      this.Email = "";
     }
   }
 }

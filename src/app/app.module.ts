@@ -7,12 +7,14 @@ import { SearchPage } from '../pages/search/search';
 import { AccountPage } from '../pages/account/account';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { ListingPage } from '../pages/listing/listing';
 import { Shared } from '../providers/shared';
 import { RestService } from '../providers/rest-service';
 import { CalculatePage } from '../pages/calculate/calculate';
 import { ReviewPage } from '../pages/review/review';
 import { SuggestionPage } from '../pages/suggestion/suggestion';
 import { ActionPage } from '../pages/action/action';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { ActionPage } from '../pages/action/action';
     CalculatePage,
     ReviewPage,
     SuggestionPage,
-    ActionPage
+    ActionPage,
+    ListingPage,
+    WelcomePage
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
@@ -57,7 +61,9 @@ tabsPlacement: 'top',
     CalculatePage,
     ReviewPage,
     SuggestionPage,
-    ActionPage
+    ActionPage,
+    ListingPage,
+    WelcomePage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Shared, RestService]
 })
