@@ -14,32 +14,27 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-header><h1>{{suggestion.suggestion}}</h1></ion-card-header>
+    <ion-card-header color="primary">{{suggestion.suggestion}}</ion-card-header>
     <ion-list>
-      <ion-item-sliding *ngFor="let a of actions">
-        <ion-item>
-    <h3>By {{a.actionOwner}}</h3>
+        <ion-item text-wrap *ngFor="let a of actions">
+    <h3>By {{a.actionOwnerFullname}}</h3>
     <small>Deadline: {{a.actionDeadline}}</small>
     <p><i>{{a.action}}</i></p>
   </ion-item>
-    <ion-item-options side="right">
-      <button ion-button color="danger">
-        <ion-icon name="trash"></ion-icon>
-        Delete
-      </button>
-    </ion-item-options>
-  </ion-item-sliding>
     </ion-list>
   </ion-card>
 </ion-content>
 
 <ion-footer>
   <ion-list>
-      <ion-item>
-        <ion-label floating>Action by</ion-label>
-        <ion-input [(ngModel)]="actionOwner" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
+      <ion-searchbar (input)="search($event)" placeholder="Assign action to?"></ion-searchbar>
+      <ion-list>
+        <button ion-item text-wrap *ngFor="let u of users" (click)="selectUser(u)">
+          <p>{{u.fullname}}</p>
+          <small>@{{u.username}}</small>
+        </button>
+      </ion-list>
+      <ion-item padding-left>
         <ion-label>Complete by</ion-label>
         <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="actionDeadline"></ion-datetime>
         </ion-item>

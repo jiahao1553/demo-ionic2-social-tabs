@@ -4,4 +4,5 @@ export interface Suggestion {
   suggestionOwner: string;
   suggestionOwnerFullname: string;
   suggestion: string;
+  updatedAt: string;
 }

@@ -72,8 +72,14 @@ private shared: Shared) {
       this.restService
         .uploadFile(fileToUpload)
         .subscribe(res => {
-          this.restService.postUser(this.username, this.fullname, res.json(), 0)
+          this.restService.postUser(this.username, this.fullname, res.json(), 0, 0)
             .subscribe(data => {
+              this.shared.userId = data.id;
+              this.shared.username = data.username;
+              this.shared.fullname = data.fullname;
+              this.shared.avatarId = data.avatarId;
+              this.shared.ideaNo = data.ideaNo;
+              this.shared.actionNo = data.actionNo;
               this.navCtrl.setRoot(TabsPage);
               this.shared.toast(this.username+'\'s profile is updated');
               loading.dismiss();

@@ -50,9 +50,11 @@ export class LoginPage {
               this.shared.username = this.users[0].username;
               this.shared.fullname = this.users[0].fullname;
               this.shared.avatarId = this.users[0].avatarId;
-              this.shared.fuel = this.users[0].fuel;
+              this.shared.ideaNo = this.users[0].ideaNo;
+              this.shared.actionNo = this.users[0].actionNo;
               this.navCtrl.setRoot(TabsPage);
               this.shared.toast("Logged in as " + this.Username);
+              console.log(this.shared.ideaNo+' '+this.shared.actionNo);
             }
             else{
               this.navCtrl.push(WelcomePage, {username: this.Username});

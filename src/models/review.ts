@@ -1,5 +1,6 @@
 export interface Review {
   id: string;
+  topic: string;
   ideaId: string;
   idea: string;
   area: string;
@@ -8,8 +9,10 @@ export interface Review {
   suggestion: string;
   benefit: string;
   benefitCategory: string;
-  submitter: string;
+  ideaOwner: string;
   teamMembers: string;
+  imageBefore: string;
+  imageAfter: string;
 
   softSaving: number;
   hardSaving: number;

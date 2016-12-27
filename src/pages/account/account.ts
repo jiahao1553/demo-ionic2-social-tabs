@@ -1,9 +1,12 @@
-import { Component,/* ViewChild */} from '@angular/core';
-import { NavController, LoadingController, AlertController, ViewController } from 'ionic-angular';
-import { App, /*Content*/ } from 'ionic-angular';
+import { Component} from '@angular/core';
+import { NavController, LoadingController, ModalController, AlertController, ViewController } from 'ionic-angular';
+import { App} from 'ionic-angular';
 import { LoginPage } from '../login/login';
-// import { Idea } from '../../models/idea';
-// import { User } from '../../models/user';
+import { ListingPage } from '../listing/listing';
+import { General } from '../../models/general';
+import { Idea } from '../../models/idea';
+import { Action } from '../../models/action';
+import { Suggestion } from '../../models/suggestion';
 import { Shared } from '../../providers/shared';
 import { RestService } from '../../providers/rest-service';
 
@@ -12,144 +15,155 @@ import { RestService } from '../../providers/rest-service';
   templateUrl: 'account.html'
 })
 export class AccountPage {
-  // userId: string;
-  // username: string;
-  // fullname: string
-  // avatarId: string;
-  // fuel: string;
-  //
-  // @ViewChild("fileInput") fileInput;
-  // fi: any;
-  //
-  // @ViewChild(Content) content: Content;
-  // editProfileToggle: boolean;
-
   constructor(private app: App,
     public navCtrl: NavController,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private viewCtrl: ViewController,
     private restService: RestService,
     private shared: Shared) {
-    // this.editProfileToggle = false;
-
   }
 
   ionViewDidLoad() {
     console.log('Hello AccountPage Page');
   }
 
-  // toggleEditProfile() {
-  //   this.editProfileToggle = true;
-  //   this.content.resize();
-  // }
-  //
-  // updateProfilePicture() {
-  //   this.editProfileToggle = false;
-  //   this.content.resize();
-  //   this.fi = this.fileInput.nativeElement;
-  //
-  //   let confirm = this.alertCtrl.create({
-  //     title: 'Confirmation',
-  //     message: 'Do you want to update your profile picture now?',
-  //     buttons: [
-  //       {
-  //         text: 'No',
-  //         handler: () => {
-  //           console.log('Disagree clicked');
-  //         }
-  //       },
-  //       {
-  //         text: 'Yes',
-  //         handler: () => {
-  //           console.log('Agree clicked');
-  //           if (this.fi.files && this.fi.files[0]) {
-  //
-  //             let loading = this.loadingCtrl.create({
-  //               content: "Uploading profile picture"
-  //             });
-  //             loading.present();
-  //
-  //             let fileToUpload = this.fi.files[0];
-  //             this.restService
-  //               .uploadFile(fileToUpload)
-  //               .subscribe(res => {
-  //                 this.avatarId = res.json();
-  //
-  //                 this.restService.updateUser(this.userId, this.fullname, this.avatarId, this.fuel)
-  //                   .subscribe(data => {
-  //                     this.shared.toast('Profile picture updated');
-  //                     loading.dismiss();
-  //                   }, (err) => {
-  //                     loading.dismiss();
-  //                     let alert = this.alertCtrl.create({
-  //                       title: 'Sending picture failed',
-  //                       message: err,
-  //                       buttons: ['Try again']
-  //                     });
-  //                     alert.present();
-  //                   });
-  //               }, (err) => {
-  //                 loading.dismiss();
-  //                 console.log(err);
-  //               });
-  //           }
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   confirm.present();
-  // }
-  //
-  // updatefullname(){
-  //   let prompt = this.alertCtrl.create({
-  //     title: 'Edit fullname',
-  //     message: "Enter your new fullname below",
-  //     inputs: [
-  //       {
-  //         name: 'fullname',
-  //         placeholder: 'New fullname'
-  //       },
-  //     ],
-  //     buttons: [
-  //       {
-  //         text: 'Cancel',
-  //         handler: data => {
-  //           console.log('Cancel clicked');
-  //         }
-  //       },
-  //       {
-  //         text: 'Update',
-  //         handler: data => {
-  //           console.log('Saved clicked');
-  //
-  //           let loading = this.loadingCtrl.create({
-  //             content: "Getting ideas we collected..."
-  //           });
-  //           loading.present();
-  //
-  //           this.fullname = data.fullname;
-  //           this.restService.updateUser(this.userId, this.fullname, this.avatarId)
-  //             .subscribe(data => {
-  //               this.shared.toast('fullname updated');
-  //               loading.dismiss();
-  //             }, (err) => {
-  //               loading.dismiss();
-  //               let alert = this.alertCtrl.create({
-  //                 title: 'Update fullname failed',
-  //                 message: err,
-  //                 buttons: ['Try again']
-  //               });
-  //               alert.present();
-  //             });
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   prompt.present();
-  // }
+  ideaToGeneral(ideas: Idea[]): General[] {
+    var generals: General[] = [];
+    for (let i = 0; i < ideas.length; i++) {
+      let data = [{
+        id: ideas[i].id,
+        description: ideas[i].description,
+        date: ideas[i].updatedAt
+      }];
+      if (generals.length > 0) {
+        generals = generals.concat(data);
+      }
+      else {
+        generals = data;
+      }
+    }
+    return generals;
+  }
 
-  goToLogin(){
+  actionToGeneral(actions: Action[]): General[] {
+    var generals: General[] = [];
+    for (let i = 0; i < actions.length; i++) {
+      let data = [{
+        id: actions[i].ideaId,
+        description: actions[i].action,
+        date: actions[i].actionDeadline
+      }];
+      if (generals.length > 0) {
+        generals = generals.concat(data);
+      }
+      else {
+        generals = data;
+      }
+    }
+    return generals;
+  }
+
+  suggestionToGeneral(suggestions: Suggestion[]): General[] {
+    var generals: General[] = [];
+    for (let i = 0; i < suggestions.length; i++) {
+      let data = [{
+        id: suggestions[i].ideaId,
+        description: suggestions[i].suggestion,
+        date: suggestions[i].updatedAt
+      }];
+      if (generals.length > 0) {
+        generals = generals.concat(data);
+      }
+      else {
+        generals = data;
+      }
+    }
+    return generals;
+  }
+
+  loadIdeas(mode: number) {
+    let loading = this.loadingCtrl.create({
+      content: "Getting your ideas..."
+    });
+    loading.present();
+
+    var key: string;
+    var value: string;
+    var title: string;
+
+    switch (mode) {
+      case 0:
+        key = "ideaOwner";
+        value = this.shared.username;
+        title = "Ideas";
+        break;
+      case 1:
+        key = "status";
+        value = "Closed";
+        title = "Closed Ideas";
+        break;
+      case 2:
+        key = "likesString";
+        value = this.shared.username;
+        title = "Liked Ideas";
+        break;
+      default:
+        key = "ideaOwner";
+        value = this.shared.username;
+        title = "Ideas";
+        break;
+    }
+    this.restService.searchIdea(key, value, "", "", "2016-01-01", this.shared.getToday())
+      .subscribe(data => {
+        loading.dismiss();
+        this.modalListing(title, this.ideaToGeneral(data));
+      }, (err) => {
+        loading.dismiss();
+        console.log(err);
+      });
+  }
+
+  loadActions() {
+    let loading = this.loadingCtrl.create({
+      content: "Getting your actions..."
+    });
+    loading.present();
+
+    this.restService.searchAction("actionOwner", this.shared.username, "2016-01-01", "2036-01-01")
+      .subscribe(data => {
+        loading.dismiss();
+        this.modalListing("Actions", this.actionToGeneral(data));
+      }, (err) => {
+        loading.dismiss();
+        console.log(err);
+      });
+  }
+
+  loadSuggestions() {
+    let loading = this.loadingCtrl.create({
+      content: "Getting your suggestions..."
+    });
+    loading.present();
+
+    this.restService.searchSuggestion("suggestionOwner", this.shared.username, "2016-01-01", "2036-01-01")
+      .subscribe(data => {
+        loading.dismiss();
+        this.modalListing("Suggestions", this.suggestionToGeneral(data));
+      }, (err) => {
+        loading.dismiss();
+        console.log(err);
+      });
+  }
+
+  modalListing(title: string, generals: General[]) {
+    console.log(generals);
+    let modal = this.modalCtrl.create(ListingPage, { title: title, generals: generals });
+    modal.present();
+  }
+
+  goToLogin() {
     this.app.getRootNav().push(LoginPage);
   }
 }

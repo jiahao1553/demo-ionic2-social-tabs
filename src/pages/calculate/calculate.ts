@@ -16,7 +16,6 @@ export class CalculatePage {
   suggestion: string;
   suggestionId: string;
   suggestionToggle: boolean;
-  submitter: string;
   suggestions: Suggestion[];
   @ViewChild(Content) content: Content;
   CalculateItemVisibility: boolean;
@@ -71,7 +70,6 @@ export class CalculatePage {
     private navParams: NavParams,
     private shared: Shared,
     private restService: RestService) {
-      this.submitter = this.shared.username;
       this.suggestionToggle = true;
     this.idea = navParams.get('idea');
     this.suggestions = navParams.get('suggestions');
@@ -152,6 +150,7 @@ export class CalculatePage {
   modalReview() {
     let review ={
       ideaId: this.idea.id,
+      topic: "",
       idea: this.idea.description,
       area: this.idea.area,
       updatedAt: "",
@@ -159,8 +158,11 @@ export class CalculatePage {
       suggestion: this.suggestion,
       benefit: "",
       benefitCategory: this.BenefitCategory,
-      submitter: this.submitter,
+      ideaOwner: this.idea.ideaOwner,
       teamMembers: "",
+
+      imageBefore: "",
+      imageAfter: "",
 
       softSaving: this.SoftSaving,
       hardSaving: this.HardSaving,

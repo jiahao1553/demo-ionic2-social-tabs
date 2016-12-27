@@ -67,6 +67,16 @@ export class PostPage {
     this.fileExist= (this.fi.files && this.fi.files[0]);
   }
 
+  updateIdeaNo(){
+    this.shared.ideaNo++;
+    this.restService.updateUser(this.shared.userId, this.shared.fullname, this.shared.avatarId, this.shared.ideaNo, this.shared.actionNo)
+    .subscribe(res => {
+      console.log(this.shared.ideaNo);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   post() {
     if((this.description.trim().length>0)
     &&(this.latestSuggestion.trim().length>0)
@@ -89,6 +99,7 @@ export class PostPage {
               this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
               .subscribe(data => {
                 console.log(data);
+                this.updateIdeaNo();
                 this.shared.toast('Idea uploaded');
                 loading.dismiss();
                 this.navCtrl.setRoot(TabsPage);
@@ -118,6 +129,7 @@ export class PostPage {
           this.area, this.status, this.likes, this.likesString, this.suggestionsNo,
           this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
           .subscribe(data => {
+            this.updateIdeaNo();
             this.shared.toast('Idea sent!');
             loading.dismiss();
             this.navCtrl.setRoot(TabsPage);

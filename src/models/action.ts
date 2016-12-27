@@ -3,6 +3,7 @@ export interface Action {
   ideaId: string;
   suggestionId: string;
   actionOwner: string;
+  actionOwnerFullname: string;
   action: string;
   actionDeadline: string;
 }

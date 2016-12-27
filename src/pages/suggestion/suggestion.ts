@@ -47,6 +47,9 @@ export class SuggestionPage {
       this.CalculateVisibility = false;
     }
 
+    //FOR TESTING
+    this.CalculateVisibility = true;
+
     this.restService.getSuggestion(this.i.id).subscribe(data => {
       this.suggestions = data;
       loading.dismiss();
@@ -104,92 +107,6 @@ export class SuggestionPage {
     }
   }
 
-  selectProgress() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Current Progress',
-      buttons: [
-        {
-          text: 'Open',
-          handler: () => {
-            console.log('Open clicked');
-            this.i.status = "Open";
-            let loading = this.loadingCtrl.create({
-              content: "We're updating your status..."
-            });
-            loading.present();
-            this.restService.updateIdea(this.i.id, this.i.status, this.i.likes, this.i.likesString,
-              this.i.suggestionsNo, this.i.latestSuggestionOwner,
-              this.i.latestSuggestionOwnerFullname, this.i.latestSuggestion)
-              .subscribe(data =>{
-                loading.dismiss();
-                console.log(data);
-              }, (err) =>{
-                loading.dismiss();
-                console.log(err);
-              });
-            this.CalculateVisibility = false;
-            this.content.resize();
-          }
-        },
-        {
-          text: 'Going',
-          handler: () => {
-            console.log('Going clicked');
-            this.i.status = "Going";
-            let loading = this.loadingCtrl.create({
-              content: "We're updating your status..."
-            });
-            loading.present();
-            this.restService.updateIdea(this.i.id, this.i.status, this.i.likes, this.i.likesString,
-              this.i.suggestionsNo, this.i.latestSuggestionOwner,
-              this.i.latestSuggestionOwnerFullname, this.i.latestSuggestion)
-              .subscribe(data =>{
-                loading.dismiss();
-                console.log(data);
-              }, (err) =>{
-                loading.dismiss();
-                console.log(err);
-              });
-            this.CalculateVisibility = false;
-            this.content.resize();
-          }
-        },
-        {
-          text: 'Closed',
-          role: 'destructive',
-          handler: () => {
-            console.log('Process clicked');
-            this.i.status = "Closed";
-            let loading = this.loadingCtrl.create({
-              content: "We're updating your status..."
-            });
-            loading.present();
-            this.restService.updateIdea(this.i.id, this.i.status, this.i.likes, this.i.likesString,
-              this.i.suggestionsNo, this.i.latestSuggestionOwner,
-              this.i.latestSuggestionOwnerFullname, this.i.latestSuggestion)
-              .subscribe(data =>{
-                loading.dismiss();
-                console.log(data);
-              }, (err) =>{
-                loading.dismiss();
-                console.log(err);
-              });
-            this.CalculateVisibility = true;
-            this.content.resize();
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
-
   post(){
     if(this.suggestion.trim().length>0){
 
@@ -198,6 +115,7 @@ export class SuggestionPage {
       });
       loading.present();
       this.i.suggestionsNo++;
+      this.i.status = "Going";
       this.restService.updateIdea(this.i.id, this.i.status, this.i.likes, this.i.likesString,
         this.i.suggestionsNo, this.shared.username,
         this.shared.fullname, this.suggestion)

@@ -18,10 +18,10 @@ export class RestService {
     console.log('Hello RestService Provider');
   }
 
-  postUser(username: string, fullname: string, avatarId: string, fuel: number): Observable<User> {
+  postUser(username: string, fullname: string, avatarId: string, ideaNo: number, actionNo: number): Observable<User> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(`${this.apiUrl}/user?username=${username}&fullname=${fullname}&avatarId=${avatarId}&fuel=${fuel}`, { headers: headers })
+    return this.http.post(`${this.apiUrl}/user?username=${username}&fullname=${fullname}&avatarId=${avatarId}&ideaNo=${ideaNo}&actionNo=${actionNo}`, { headers: headers })
       .map(res => <User>res.json());
   }
 
@@ -33,15 +33,16 @@ export class RestService {
   }
 
   searchUser(key: string, value: string): Observable<User[]> {
-    return this.http.get(`${this.apiUrl}/user?${key}=${value}`)
+    return this.http.get(`${this.apiUrl}/user?${key}=${value}&sort=updatedAt DESC`)
       .map(res => <User[]>res.json());
   }
 
-  updateUser(id: string, fullname: string, avatarId: string, fuel: number): Observable<User> {
+  updateUser(id: string, fullname: string, avatarId: string, ideaNo: number, actionNo: number): Observable<User> {
     let data = {
       fullname: fullname,
       avatarId: avatarId,
-      fuel: fuel
+      ideaNo: ideaNo,
+      actionNo: actionNo
     };
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -141,16 +142,22 @@ export class RestService {
       .map(res => <Suggestion[]>res.json());
   }
 
+  deleteSuggestion(ideaId: string): Observable<Suggestion> {
+    return this.http.delete(`${this.apiUrl}/suggestion/${ideaId}`)
+      .map(res => <Suggestion>res.json());
+  }
+
   searchSuggestion(key: string, value: string, startDate: string, endDate: string): Observable<Suggestion[]> {
     return this.http.get(`${this.apiUrl}/suggestion?where={"${key}":{"contains":"${value}"}, "updatedAt":{">": "${startDate}", "<": "${endDate}"}}`)
       .map(res => <Suggestion[]>res.json());
   }
 
-  postAction(ideaId: string, suggestionId: string, actionOwner: string, action: string, actionDeadline: string): Observable<Action> {
+  postAction(ideaId: string, suggestionId: string, actionOwner: string, actionOwnerFullname: string, action: string, actionDeadline: string): Observable<Action> {
     let data = {
       ideaId: ideaId,
       suggestionId: suggestionId,
       actionOwner: actionOwner,
+      actionOwnerFullname: actionOwnerFullname,
       action: action,
       actionDeadline: actionDeadline
     };
@@ -163,6 +170,11 @@ export class RestService {
   getAction(suggestionId: string): Observable<Action[]> {
     return this.http.get(`${this.apiUrl}/action?suggestionId=${suggestionId}&sort=updatedAt ASC`)
       .map(res => <Action[]>res.json());
+  }
+
+  deleteAction(actionId: string): Observable<Action> {
+    return this.http.delete(`${this.apiUrl}/action/${actionId}`)
+      .map(res => <Action>res.json());
   }
 
   searchAction(key: string, value: string, startDate: string, endDate: string): Observable<Action[]> {

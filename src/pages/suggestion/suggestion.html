@@ -20,17 +20,22 @@
       </ion-avatar>
       <h2>{{i.ideaOwnerFullname}}</h2>
       <ion-badge item-right>{{i.area}}</ion-badge>
-      <p>@{{i.ideaOwner}}</p>
-      <p>{{i.updatedAt.substr(0, 10)}}</p>
+      <small>{{i.updatedAt.substr(0, 10)}}</small>
     </ion-item>
 
     <ion-card-content>
       <p>{{i.description}}</p>
-      <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'" [src]="gridfsUrl+'/media/'+i.mediaId+'i.mediaType'">
-      <video *ngIf="i.mediaType=='.mp4'" width="320" height="240" controls>
-        <source [src]="gridfsUrl+'/media/'+i.mediaId+'i.mediaType'" type="video/mp4">
+      <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'" [src]="gridfsUrl+'/media/'+i.mediaId+i.mediaType">
+      <video *ngIf="i.mediaType=='.mp4'" width="240" height="180" style="margin:auto; display: block" controls>
+        <source [src]="gridfsUrl+'/media/'+i.mediaId+i.mediaType" type="video/mp4">
+          Your browser does not support the video playback.
       </video>
-      <a ion-item text-center *ngIf="!(i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'||i.mediaType=='.mp4'||!i.mediaType)" [href]="gridfsUrl+'/media/'+i.mediaId+i.mediaType"
+
+      <audio *ngIf="i.mediaType=='.mp3'" controls>
+<source [src]="gridfsUrl+'/media/'+i.mediaId+i.mediaType" type="audio/mpeg">
+Your browser does not support the audio playback.
+</audio>
+      <a ion-item text-center *ngIf="!(i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'||i.mediaType=='.mp4'||i.mediaType=='.mp3'||!i.mediaType)" [href]="gridfsUrl+'/media/'+i.mediaId+i.mediaType"
           target="_blank">
         <ion-icon name="cloud-download"></ion-icon>{{i.mediaType}}</a>
     </ion-card-content>
@@ -39,34 +44,25 @@
       <ion-col width-50 center text-center>
         <button ion-button full primary clear small icon-left text-center (click)="like(i)">
           <ion-icon name="thumbs-up"></ion-icon>
-          {{i.likes.string}}
+          {{i.likes.length}}
         </button>
       </ion-col>
       <ion-col width-50 center text-center>
-        <button ion-button full primary clear small icon-left text-center (click)="selectProgress()">
-        <ion-icon name="bookmark"></ion-icon>{{i.status}}
-      </button>
+        <ion-item text-center><small style="text-transform:uppercase; color:#007aff"><b>{{i.status}}</b></small>
+        </ion-item>
       </ion-col>
     </ion-row>
 
   </ion-card>
 
   <ion-card>
-    <ion-card-header>Suggestions</ion-card-header>
+    <ion-card-header color="primary">Suggestions</ion-card-header>
     <ion-list>
-      <ion-item-sliding *ngFor="let s of suggestions">
-        <ion-item text-wrap (click)="modalAction(s)">
-            <h3>{{s.suggestionOwner}}</h3>
+        <ion-item text-wrap (click)="modalAction(s)" *ngFor="let s of suggestions">
+            <h3>{{s.suggestionOwnerFullname}}</h3>
             <small>{{s.updatedAt.substr(0, 10)}}</small>
             <p><i>{{s.suggestion}}</i></p>
           </ion-item>
-        <ion-item-options side="right">
-          <button ion-button color="danger">
-        <ion-icon name="trash"></ion-icon>
-        Delete
-      </button>
-        </ion-item-options>
-      </ion-item-sliding>
     </ion-list>
   </ion-card>
 </ion-content>

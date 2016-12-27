@@ -3,5 +3,6 @@ export interface User {
   username: string;
   fullname: string;
   avatarId: string;
-  fuel: string;
+  ideaNo: number;
+  actionNo: number;
 }

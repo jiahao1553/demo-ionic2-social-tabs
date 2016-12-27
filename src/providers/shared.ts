@@ -12,7 +12,8 @@ export class Shared {
   username: any;
   fullname: any;
   avatarId: any;
-  fuel: any;
+  ideaNo: number;
+  actionNo: number;
   users: User[];
   constructor(private http: Http,
     private toastCtrl: ToastController,
@@ -53,7 +54,8 @@ export class Shared {
     this.username = "Anonymous";
     this.fullname = "Anonymous";
     this.avatarId = "";
-    this.fuel = 0;
+    this.ideaNo = 0;
+    this.actionNo = 0;
   }
 
   toast(message: string){
