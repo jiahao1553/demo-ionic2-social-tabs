@@ -22,7 +22,7 @@ notFoundMessageToggle: boolean;
 private restService: RestService) {
       this.title = navParams.get('title');
       this.generals = navParams.get('generals');
-      if(this.generals){
+      if(this.generals.length==0){
         this.notFoundMessageToggle = false;
       }
       else{

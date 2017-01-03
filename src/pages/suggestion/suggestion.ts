@@ -116,6 +116,9 @@ export class SuggestionPage {
       loading.present();
       this.i.suggestionsNo++;
       this.i.status = "Going";
+      this.i.latestSuggestionOwner = this.shared.fullname;
+      this.i.latestSuggestionOwnerFullname = this.shared.fullname;
+      this.i.latestSuggestion = this.suggestion;
       this.restService.updateIdea(this.i.id, this.i.status, this.i.likes, this.i.likesString,
         this.i.suggestionsNo, this.shared.username,
         this.shared.fullname, this.suggestion)

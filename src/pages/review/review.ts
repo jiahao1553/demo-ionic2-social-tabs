@@ -131,6 +131,13 @@ private shared: Shared)
     if((this.review.benefit.trim().length>0)&&(this.review.teamMembers.trim().length>0)){
       this.loading.present();
 
+      this.restService.updateIdeaStatus(this.review.ideaId, "Review")
+        .subscribe(data =>{
+          console.log(data);
+        }, (err) =>{
+          console.log(err);
+        });
+
       if(this.fileBeforeExist&&this.fileAfterExist){
         this.postBeforeFile();
       }

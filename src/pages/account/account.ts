@@ -15,6 +15,7 @@ import { RestService } from '../../providers/rest-service';
   templateUrl: 'account.html'
 })
 export class AccountPage {
+  fuel:number;
   constructor(private app: App,
     public navCtrl: NavController,
     private loadingCtrl: LoadingController,
@@ -23,6 +24,7 @@ export class AccountPage {
     private viewCtrl: ViewController,
     private restService: RestService,
     private shared: Shared) {
+      this.fuel = shared.ideaNo/2+shared.actionNo/2;
   }
 
   ionViewDidLoad() {
@@ -115,7 +117,7 @@ export class AccountPage {
         title = "Ideas";
         break;
     }
-    this.restService.searchIdea(key, value, "", "", "2016-01-01", this.shared.getToday())
+    this.restService.searchIdea(key, value, "", "", "2016-01-01", "2036-01-01")
       .subscribe(data => {
         loading.dismiss();
         this.modalListing(title, this.ideaToGeneral(data));

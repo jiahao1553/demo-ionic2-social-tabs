@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-note *ngIf="notFoundMessageToggle"><h2>Sorry, nothing is found. Anyway, we know you're always keen in making our company great!</h2></ion-note>
+  <!-- <ion-note *ngIf="notFoundMessageToggle"><h2>Sorry, nothing is found. Anyway, we know you're always keen in making our company great!</h2></ion-note> -->
 <ion-list>
   <button ion-item *ngFor="let g of generals" (click)="loadIdea(g.id)">
     <h2>{{g.description}}</h2>

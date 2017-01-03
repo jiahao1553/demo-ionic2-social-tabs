@@ -19,10 +19,10 @@
 
         <ion-card-content>
           <p>{{i.description}}</p>
-          <img *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'"
+          <img style="object-fit:cover; width: 60%; margin: auto; display:block; image-orientation: from-image;" *ngIf="i.mediaType=='.jpg'||i.mediaType=='.png'||i.mediaType=='.bmp'||i.mediaType=='.gif'||i.mediaType=='.jpeg'"
           [src]="gridfsUrl+'/media/'+i.mediaId+i.mediaType">
 
-          <video *ngIf="i.mediaType=='.mp4'" width="240" height="180" style="margin:auto; display: block" controls>
+          <video *ngIf="i.mediaType=='.mp4'" width="256" height="256" style="margin:auto; display: block" controls>
             <source [src]="gridfsUrl+'/media/'+i.mediaId+i.mediaType" type="video/mp4">
               Your browser does not support the video playback.
           </video>
@@ -62,8 +62,12 @@
       </ion-card>
     </ion-col>
   </ion-row>
+  <!-- <ion-note *ngIf="notFoundMessageToggle"><h2>Sorry, nothing is found. Anyway, we know you're always keen in making our company great!</h2></ion-note> -->
   <ion-fab right bottom *ngIf="refreshToggle">
-  <button ion-fab (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+  <button ion-fab mini (click)="refresh()"><ion-icon name="refresh"></ion-icon></button>
+  </ion-fab>
+  <ion-fab right bottom>
+  <button ion-fab (click)="modalPost()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content

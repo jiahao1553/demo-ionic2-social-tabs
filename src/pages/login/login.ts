@@ -37,11 +37,9 @@ export class LoginPage {
       });
       loading.present();
 
-      // this.restService.authUser(this.Username, this.Password).subscribe(data => {
-      //   loading.dismiss();
-      //   if (data) {
-
-          // this.userExist = this.shared.getUserInformation(this.Username);
+      this.restService.authUser(this.Username, this.Password).subscribe(data => {
+        loading.dismiss();
+        if (data) {
           this.restService.searchUser("username", this.Username).subscribe(data => {
             loading.dismiss();
             this.users = data;
@@ -63,24 +61,24 @@ export class LoginPage {
             loading.dismiss();
             console.log('Error');
           });
-      //   }
-      //   else {
-      //     let alert = this.alertCtrl.create({
-      //       title: 'Login Failed',
-      //       message: 'Username or Password is incorrect',
-      //       buttons: ['Try again']
-      //     });
-      //     alert.present();
-      //   }
-      // }, (err) => {
-      //   loading.dismiss();
-      //   let alert = this.alertCtrl.create({
-      //     title: 'Login Failed',
-      //     message: err,
-      //     buttons: ['Try again']
-      //   });
-      //   alert.present();
-      // });
+        }
+        else {
+          let alert = this.alertCtrl.create({
+            title: 'Login Failed',
+            message: 'Username or Password is incorrect',
+            buttons: ['Try again']
+          });
+          alert.present();
+        }
+      }, (err) => {
+        loading.dismiss();
+        let alert = this.alertCtrl.create({
+          title: 'Login Failed',
+          message: err,
+          buttons: ['Try again']
+        });
+        alert.present();
+      });
     }
     else {
       let alert = this.alertCtrl.create({

@@ -70,4 +70,11 @@ export class Shared {
     var utc = new Date().toJSON().slice(0,10);
     return utc;
   }
+
+  getTomorrow():string{
+    var d = new Date();
+    d.setDate(d.getDate()+1);
+    var utc = d.toJSON().slice(0,10);
+    return utc;
+  }
 }

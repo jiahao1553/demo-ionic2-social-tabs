@@ -77,6 +77,20 @@ export class PostPage {
     });
   }
 
+  postSuggestion(ideaId: string){
+    this.restService.postSuggestion(ideaId, this.shared.username, this.shared.fullname, this.latestSuggestion)
+    .subscribe(data => {
+
+    }, (err) => {
+      let alert = this.alertCtrl.create({
+        title: 'Sending suggestion failed',
+        message: err,
+        buttons: ['Try again']
+      });
+      alert.present();
+    });
+  }
+
   post() {
     if((this.description.trim().length>0)
     &&(this.latestSuggestion.trim().length>0)
@@ -99,6 +113,7 @@ export class PostPage {
               this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
               .subscribe(data => {
                 console.log(data);
+                this.postSuggestion(data.id);
                 this.updateIdeaNo();
                 this.shared.toast('Idea uploaded');
                 loading.dismiss();
@@ -129,6 +144,7 @@ export class PostPage {
           this.area, this.status, this.likes, this.likesString, this.suggestionsNo,
           this.latestSuggestionOwner, this.latestSuggestionOwnerFullname, this.latestSuggestion)
           .subscribe(data => {
+            this.postSuggestion(data.id);
             this.updateIdeaNo();
             this.shared.toast('Idea sent!');
             loading.dismiss();
@@ -152,5 +168,9 @@ export class PostPage {
       });
       alert.present();
     }
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 }

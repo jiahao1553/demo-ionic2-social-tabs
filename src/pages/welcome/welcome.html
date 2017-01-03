@@ -14,13 +14,11 @@
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
       <p [innerHTML]="slide.description"></p>
     </ion-slide>
-    <ion-slide>
-      <ion-toolbar>
-      </ion-toolbar>
-      <!-- <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/> -->
-      <h2 class="slide-title">Let's make our profile easier to be recognized!</h2>
+  </ion-slides>
+</ion-content>
+<ion-footer>
       <ion-item>
-        <ion-label>Fullname</ion-label>
+        <ion-label floating>Fullname</ion-label>
         <ion-input [(ngModel)]="fullname" type="text"></ion-input>
       </ion-item>
 
@@ -28,12 +26,11 @@
         <div>
           <input type="file" #fileInput (change)="addFile()"/>
         </div>
+        <small><i>Recommended to use image with .jpg extension</i></small>
       </ion-item>
-      <small><i>Recommended to use image with .jpg extension</i></small>
-      <button ion-button large clear icon-right color="primary" (click)="post()">
-        Continue
+    <ion-fab right bottom>
+      <button ion-fab (click)="post()">
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
-    </ion-slide>
-  </ion-slides>
-</ion-content>
+</ion-fab>
+</ion-footer>

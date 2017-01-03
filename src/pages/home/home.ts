@@ -5,6 +5,7 @@ import { Shared } from '../../providers/shared';
 import { RestService } from '../../providers/rest-service';
 import { Idea } from '../../models/idea';
 import { SuggestionPage } from '../suggestion/suggestion';
+import { PostPage } from '../post/post';
 
 @Component({
   selector: 'page-home',
@@ -17,6 +18,8 @@ export class HomePage {
   moreIdeas: Idea[];
   loadIdeasSkipper: number;
   refreshToggle: boolean;
+  // notFoundMessageToggle: boolean;
+  loading: any;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
@@ -25,6 +28,9 @@ export class HomePage {
     public restService: RestService,
     private shared: Shared) {
       this.gridfsUrl= this.restService.gridfsUrl;
+      this.loading = this.loadingCtrl.create({
+        content: "Getting ideas we collected..."
+      });
       this.reset();
   }
 
@@ -37,24 +43,33 @@ refresh(){
     this.refreshToggle = false;
 
       this.loadIdeasSkipper = 0;
-      let loading = this.loadingCtrl.create({
-        content: "Getting ideas we collected..."
-      });
-      loading.present();
+
+      this.loading.present();
+
       this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
         this.ideas = data;
-        loading.dismiss();
+        // if(this.ideas.length==0){
+        //   this.notFoundMessageToggle = false;
+        // }
+        // else{
+        //   this.notFoundMessageToggle = true;
+        // }
+        this.loading.dismiss();
       }, (err) => {
-        loading.dismiss();
+        this.loading.dismiss();
         console.log('Error');
       });
+  }
+
+  ionViewDidLoad() {
+    console.log('Hello LoginPage Page');
   }
 
   doInfinite(infiniteScroll) {
     this.refreshToggle = true;
     this.content.resize();
 
-    this.loadIdeasSkipper+=5;
+    this.loadIdeasSkipper+=10;
     console.log(this.loadIdeasSkipper);
     setTimeout(() => {
       this.restService.getIdea(this.loadIdeasSkipper).subscribe(data => {
@@ -99,6 +114,11 @@ refresh(){
 
   modalSuggestion(idea: Idea) {
     let modal = this.modalCtrl.create(SuggestionPage, {idea});
+    modal.present();
+  }
+
+  modalPost() {
+    let modal = this.modalCtrl.create(PostPage);
     modal.present();
   }
 }

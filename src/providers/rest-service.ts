@@ -109,8 +109,19 @@ export class RestService {
       .map(res => <Idea>res.json());
   }
 
+  updateIdeaStatus(ideaId:string,
+  status: string): Observable<Idea> {
+    let data = {
+      status : status
+    };
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(this.apiUrl+'/idea/'+ideaId, JSON.stringify(data), { headers: headers })
+      .map(res => <Idea>res.json());
+  }
+
   getIdea(loadIdeasSkipper: number): Observable<Idea[]> {
-    return this.http.get(`${this.apiUrl}/idea?sort=updatedAt DESC&limit=5&skip=${loadIdeasSkipper}`)
+    return this.http.get(`${this.apiUrl}/idea?sort=updatedAt DESC&limit=10&skip=${loadIdeasSkipper}`)
       .map(res => <Idea[]>res.json());
   }
 
@@ -120,7 +131,7 @@ export class RestService {
   }
 
   searchIdea(key: string, value: string, area: string, status: string, startDate: string, endDate: string): Observable<Idea[]> {
-      return this.http.get(`${this.apiUrl}/idea?where={"${key}":{"contains":"${value}"}, "area":{"contains":"${area}"}, "status":{"contains":"${status}"}, "updatedAt":{">": "${startDate}", "<": "${endDate}"}}`)
+      return this.http.get(`${this.apiUrl}/idea?where={"${key}":{"contains":"${value}"}, "area":{"contains":"${area}"}, "status":{"contains":"${status}"}, "updatedAt":{">=": "${startDate}", "<=": "${endDate}"}}`)
         .map(res => <Idea[]>res.json());
   }
 
@@ -148,7 +159,7 @@ export class RestService {
   }
 
   searchSuggestion(key: string, value: string, startDate: string, endDate: string): Observable<Suggestion[]> {
-    return this.http.get(`${this.apiUrl}/suggestion?where={"${key}":{"contains":"${value}"}, "updatedAt":{">": "${startDate}", "<": "${endDate}"}}`)
+    return this.http.get(`${this.apiUrl}/suggestion?where={"${key}":{"contains":"${value}"}, "updatedAt":{">=": "${startDate}", "<=": "${endDate}"}}`)
       .map(res => <Suggestion[]>res.json());
   }
 
@@ -178,7 +189,7 @@ export class RestService {
   }
 
   searchAction(key: string, value: string, startDate: string, endDate: string): Observable<Action[]> {
-    return this.http.get(`${this.apiUrl}/action?where={"${key}":{"contains":"${value}"}, "actionDeadline":{">": "${startDate}", "<": "${endDate}"}}`)
+    return this.http.get(`${this.apiUrl}/action?where={"${key}":{"contains":"${value}"}, "actionDeadline":{">=": "${startDate}", "<=": "${endDate}"}}`)
       .map(res => <Action[]>res.json());
   }
 

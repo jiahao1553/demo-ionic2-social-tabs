@@ -62,11 +62,12 @@ private shared: Shared) {
   }
 
   post(){
+    let loading = this.loadingCtrl.create({
+      content: "Updating your profile..."
+    });
+    loading.present();
+
     if (this.fileExist&&this.fullname.trim().length>0){
-      let loading = this.loadingCtrl.create({
-        content: "Updating your profile..."
-      });
-      loading.present();
 
       let fileToUpload = this.fi.files[0];
       this.restService
@@ -74,15 +75,22 @@ private shared: Shared) {
         .subscribe(res => {
           this.restService.postUser(this.username, this.fullname, res.json(), 0, 0)
             .subscribe(data => {
+              loading.dismiss();
               this.shared.userId = data.id;
               this.shared.username = data.username;
               this.shared.fullname = data.fullname;
               this.shared.avatarId = data.avatarId;
               this.shared.ideaNo = data.ideaNo;
               this.shared.actionNo = data.actionNo;
-              this.navCtrl.setRoot(TabsPage);
               this.shared.toast(this.username+'\'s profile is updated');
-              loading.dismiss();
+              // let alert = this.alertCtrl.create({
+              //   title: 'You\'re ready to use ESS 2.0',
+              //   message: "Click \"OK\" to continue",
+              //   buttons: ['OK']
+              // });
+              // alert.present();
+              // this.navCtrl.setRoot(LoginPage);
+              this.navCtrl.setRoot(TabsPage);
             }, (err) => {
               loading.dismiss();
               let alert = this.alertCtrl.create({
@@ -98,6 +106,8 @@ private shared: Shared) {
         });
     }
     else{
+      loading.dismiss();
+
       let alert = this.alertCtrl.create({
         title: 'User profile update is failed',
         message: 'Your fullname or profile picture selection is empty',
