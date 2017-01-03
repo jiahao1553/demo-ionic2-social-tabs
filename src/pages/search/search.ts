@@ -113,7 +113,7 @@ refresh(){
     this.area = "";
     this.status = "";
     this.startDate = "2016-01-01";
-    this.endDate = this.shared.getToday();
+    this.endDate = this.shared.getTomorrow();
     this.term = "";
   }
 }
