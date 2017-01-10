@@ -10,7 +10,7 @@ import { Review } from '../models/review';
 
 @Injectable()
 export class RestService {
-  authUrl = 'http://10.179.131.25:58385/api';
+  authUrl = 'https://floating-anchorage-35981.herokuapp.com'; //Please use your desired authUrl
   apiUrl = 'https://floating-anchorage-35981.herokuapp.com';
   gridfsUrl = 'https://protected-temple-59341.herokuapp.com';
 

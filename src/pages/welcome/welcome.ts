@@ -25,18 +25,18 @@ export class WelcomePage {
   fileExist: boolean;
   slides = [
     {
-      title: "Welcome to the new Employee Suggestions System (ESS)",
-      description: "The <b>new ESS</b> enable you to upload file to express your idea more! e.g.: images, video, PDF, PowerPoint etc",
+      title: "Welcome to the new social network",
+      description: "The <b>new app</b> enable you to upload file to express your idea more! e.g.: images, video, PDF, PowerPoint etc",
       image: "assets/img/ica-slidebox-img-1.png",
     },
     {
-      title: "Wish to have a mobile-friendly ESS? Don't worry, we got you!",
-      description: "With <b>new ESS</b>, the content is scaled according to what device you're using. Either you're on laptop or mobile, you will get the same seamless experience!",
+      title: "Wish to have a mobile-friendly app? Don't worry, we got you!",
+      description: "With new app, the content is scaled according to what device you're using. Either you're on laptop or mobile, you will get the same seamless experience!",
       image: "assets/img/ica-slidebox-img-2.png",
     },
     {
-      title: "New ESS loves \"Search\"",
-      description: "With <b>new ESS</b>, you can search almost everything in the system which saves you from \"scrolling\"",
+      title: "New app loves \"Search\"",
+      description: "With <b>new app</b>, you can search almost everything in the system which saves you from \"scrolling\"",
       image: "assets/img/ica-slidebox-img-3.png",
     }
   ];
